@@ -9,6 +9,15 @@ namespace UI.Web
 {
     public partial class Default : System.Web.UI.Page
     {
+        public enum FormModes { Alta, Baja, Modificacion }
+
+        public FormModes FormMode
+        {
+            get { return (FormModes)this.ViewState["FormMode"]; }
+            set { this.ViewState["FormMode"] = value; }
+        }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

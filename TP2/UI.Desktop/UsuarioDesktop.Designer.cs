@@ -1,7 +1,7 @@
 ﻿namespace UI.Desktop
-    {
+{
     partial class UsuarioDesktop
-        {
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -11,14 +11,14 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose( bool disposing )
-            {
+        protected override void Dispose(bool disposing)
+        {
             if (disposing && (components != null))
-                {
+            {
                 components.Dispose();
-                }
-            base.Dispose(disposing);
             }
+            base.Dispose(disposing);
+        }
 
         #region Windows Form Designer generated code
 
@@ -27,7 +27,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-            {
+        {
             this.components = new System.ComponentModel.Container();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
@@ -42,11 +42,11 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblIDPersona = new System.Windows.Forms.Label();
             this.cbIDPersona = new System.Windows.Forms.ComboBox();
-            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
             this.personasBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
             this.personasTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.personasTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.personasBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // txtID
@@ -55,7 +55,7 @@
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(155, 20);
-            this.txtID.TabIndex = 0;
+            this.txtID.TabIndex = 1;
             this.txtID.Tag = "ID";
             // 
             // lblID
@@ -73,7 +73,7 @@
             this.txtClave.Name = "txtClave";
             this.txtClave.PasswordChar = '*';
             this.txtClave.Size = new System.Drawing.Size(155, 20);
-            this.txtClave.TabIndex = 7;
+            this.txtClave.TabIndex = 5;
             this.txtClave.Tag = "Clave";
             // 
             // lblClave
@@ -90,7 +90,7 @@
             this.txtUsuario.Location = new System.Drawing.Point(376, 32);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(155, 20);
-            this.txtUsuario.TabIndex = 6;
+            this.txtUsuario.TabIndex = 4;
             this.txtUsuario.Tag = "Usuario";
             // 
             // txtConfirmarClave
@@ -99,7 +99,7 @@
             this.txtConfirmarClave.Name = "txtConfirmarClave";
             this.txtConfirmarClave.PasswordChar = '*';
             this.txtConfirmarClave.Size = new System.Drawing.Size(155, 20);
-            this.txtConfirmarClave.TabIndex = 8;
+            this.txtConfirmarClave.TabIndex = 6;
             this.txtConfirmarClave.Tag = "ConfirmarClave";
             // 
             // lblUsuario
@@ -123,10 +123,10 @@
             // chkHabilitado
             // 
             this.chkHabilitado.AutoSize = true;
-            this.chkHabilitado.Location = new System.Drawing.Point(31, 91);
+            this.chkHabilitado.Location = new System.Drawing.Point(31, 90);
             this.chkHabilitado.Name = "chkHabilitado";
             this.chkHabilitado.Size = new System.Drawing.Size(73, 17);
-            this.chkHabilitado.TabIndex = 5;
+            this.chkHabilitado.TabIndex = 3;
             this.chkHabilitado.Text = "Habilitado";
             this.chkHabilitado.UseVisualStyleBackColor = true;
             // 
@@ -135,7 +135,7 @@
             this.btnAceptar.Location = new System.Drawing.Point(172, 131);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
-            this.btnAceptar.TabIndex = 15;
+            this.btnAceptar.TabIndex = 7;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -165,22 +165,23 @@
             // 
             this.cbIDPersona.DataSource = this.personasBindingSource;
             this.cbIDPersona.DisplayMember = "tipo_persona";
+            this.cbIDPersona.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIDPersona.Location = new System.Drawing.Point(92, 57);
             this.cbIDPersona.Name = "cbIDPersona";
             this.cbIDPersona.Size = new System.Drawing.Size(155, 21);
-            this.cbIDPersona.TabIndex = 18;
+            this.cbIDPersona.TabIndex = 2;
             this.cbIDPersona.Tag = "IDPersona";
             this.cbIDPersona.ValueMember = "id_persona";
-            // 
-            // tp2_netDataSet
-            // 
-            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
-            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // personasBindingSource
             // 
             this.personasBindingSource.DataMember = "personas";
             this.personasBindingSource.DataSource = this.tp2_netDataSet;
+            // 
+            // tp2_netDataSet
+            // 
+            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
+            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // personasTableAdapter
             // 
@@ -208,12 +209,12 @@
             this.Name = "UsuarioDesktop";
             this.Text = "UsuarioDesktop";
             this.Load += new System.EventHandler(this.UsuarioDesktop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.personasBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
-            }
+        }
 
         #endregion
 
@@ -233,6 +234,6 @@
         private tp2_netDataSet tp2_netDataSet;
         private System.Windows.Forms.BindingSource personasBindingSource;
         private tp2_netDataSetTableAdapters.personasTableAdapter personasTableAdapter;
-        
-        }
+
     }
+}
