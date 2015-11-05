@@ -1,10 +1,16 @@
 ﻿<%@ Page Title="Usuarios" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="UI.Web.Usuarios" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="bodyContentPlaceHolder" runat="server">
-    <asp:Panel ID="gridPanel" runat="server">
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            SelectedRowStyle-BackColor="Black"
-            SelectedRowStyle-ForeColor="White"
-            DataKeyNames="ID">
+   
+     <asp:Panel ID="gridPanel" HorizontalAlign="Center" runat="server">
+
+        <asp:GridView ID="GridView1" HorizontalAlign="Center" runat="server" AutoGenerateColumns="False"
+            CssClass="Grid"
+            AlternatingRowStyle-CssClass="alt"
+            PagerStyle-CssClass="pgr"
+            SelectedRowStyle-BackColor="#ffe8e9"
+            SelectedRowStyle-ForeColor="Black"
+            DataKeyNames="ID" Width="444px">
             <Columns>
                 <asp:BoundField HeaderText="ID Usuario" DataField="ID" />
                 <asp:BoundField HeaderText="ID Persona" DataField="IDPersona" />
@@ -14,7 +20,7 @@
             </Columns>
         </asp:GridView>
     </asp:Panel>
-    <asp:Panel ID="formPanel" Visible="false" runat="server" Height="159px">
+    <asp:Panel ID="formPanel" Visible="false" HorizontalAlign="Center" runat="server" Height="159px">
         <!--<asp:Label ID="idPersonaLabel" runat="server" Text="ID Persona: "></asp:Label>
         <asp:TextBox ID="idPersonaTextBox" runat="server"></asp:TextBox>
         <br />
@@ -41,8 +47,8 @@
         <asp:LinkButton ID="eliminarLinkButton" runat="server" OnClick="eliminarLinkButton_Click1">Eliminar </asp:LinkButton>
         <asp:LinkButton ID="nuevoLinkButton" runat="server" OnClick="nuevoLinkButton_Click">Nuevo</asp:LinkButton>
     </asp:Panel>
-    <asp:Panel ID="formActionsPanel" runat="server">
-        <asp:LinkButton ID="aceptarLinkButton" runat="server" OnClick="aceptarLinkButton_Click">Aceptar </asp:LinkButton>
-        <asp:LinkButton ID="cancelarLinkButton" runat="server">Cancelar</asp:LinkButton>
+    <asp:Panel ID="formActionsPanel" runat="server">     
+        <asp:Button ID="btnAceptar" CssClass="button" runat="server" Text="Aceptar" OnClick="btnAceptar_Click"/>
+        <asp:Button ID="btnCancelar" CssClass="button" runat="server" OnClick="btnCancelar_Click" Text="Cancelar" />
     </asp:Panel>
 </asp:Content>

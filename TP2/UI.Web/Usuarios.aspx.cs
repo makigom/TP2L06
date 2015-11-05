@@ -100,7 +100,7 @@ namespace UI.Web
             this.Logic.Save(usu);
         }
 
-        protected void aceptarLinkButton_Click(object sender, EventArgs e)
+        protected void btnAceptar_Click(object sender, EventArgs e)
         {
             switch (this.FormMode)
             {
@@ -183,6 +183,12 @@ namespace UI.Web
             }
         }
 
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+   
        
         
 
