@@ -6,8 +6,8 @@
             SelectedRowStyle-ForeColor="White"
             DataKeyNames="ID">
             <Columns>
-                <asp:BoundField HeaderText="ID Persona" DataField="IDPersona" />
                 <asp:BoundField HeaderText="ID Usuario" DataField="ID" />
+                <asp:BoundField HeaderText="ID Persona" DataField="IDPersona" />
                 <asp:BoundField HeaderText="Usuario" DataField="NombreUsuario" />
                 <asp:BoundField HeaderText="Habilitado" DataField="Habilitado" />
                 <asp:CommandField HeaderText="Seleccionar" ShowSelectButton="True" />
@@ -15,12 +15,12 @@
         </asp:GridView>
     </asp:Panel>
     <asp:Panel ID="formPanel" Visible="false" runat="server" Height="159px">
-        <asp:Label ID="idPersonaLabel" runat="server" Text="ID Persona: "></asp:Label>
+        <!--<asp:Label ID="idPersonaLabel" runat="server" Text="ID Persona: "></asp:Label>
         <asp:TextBox ID="idPersonaTextBox" runat="server"></asp:TextBox>
         <br />
         <asp:Label ID="idUsuarioLabel" runat="server" Text="ID Usuario: "></asp:Label>
         <asp:TextBox ID="idUsuarioTextBox" runat="server"></asp:TextBox>
-        <br />
+        <br />-->
         <asp:Label ID="usuarioLabel" runat="server" Text="Usuario: "></asp:Label>
         <asp:TextBox ID="usuarioTextBox" runat="server"></asp:TextBox>
         <br />
@@ -37,8 +37,8 @@
         <br />
     </asp:Panel>
     <asp:Panel ID="gridAdictionsPanel" runat="server">
-        <asp:LinkButton ID="editarLinkButton" runat="server" OnClick="editarLinkButton_Click">Editar </asp:LinkButton>
-        <asp:LinkButton ID="eliminarLinkButton" runat="server">Eliminar </asp:LinkButton>
+        <asp:LinkButton ID="editarLinkButton" runat="server" OnClick="editarLinkButton_Click1">Editar </asp:LinkButton>
+        <asp:LinkButton ID="eliminarLinkButton" runat="server" OnClick="eliminarLinkButton_Click1">Eliminar </asp:LinkButton>
         <asp:LinkButton ID="nuevoLinkButton" runat="server" OnClick="nuevoLinkButton_Click">Nuevo</asp:LinkButton>
     </asp:Panel>
     <asp:Panel ID="formActionsPanel" runat="server">

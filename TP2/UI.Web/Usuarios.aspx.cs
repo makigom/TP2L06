@@ -39,11 +39,12 @@ namespace UI.Web
             get { return (FormModes)this.ViewState["FormMode"]; }
             set { this.ViewState["FormMode"] = value; }
         }
+        private Usuario _Entity;
 
         private Usuario Entity
         {
-            get;
-            set;
+            get { return _Entity; }
+            set { _Entity = value;}
         }
 
         private int SelectedID
@@ -65,15 +66,8 @@ namespace UI.Web
              }        
         }
 
-        private bool IsEntitySelected
-        {
-            get
-            {
-                return (this.SelectedID != 0);
-            }
-        }
 
-        protected void gridView1_SelecteddIndexChanged(object sender, EventArgs e)
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.SelectedID = (int)this.GridView1.SelectedValue;
         }
@@ -89,21 +83,16 @@ namespace UI.Web
 
         protected void editarLinkButton_Click(object sender, EventArgs e)
         {
-            if(this.IsEntitySelected)
-            {
-                this.EnableForm(true);
-                this.formPanel.Visible = true;
-                this.FormMode = FormModes.Modificacion;
-                this.LoadForm(this.SelectedID);
-            }
+            
         }
 
         private void LoadEntity(Usuario usu)
         {
             usu.NombreUsuario = this.usuarioTextBox.Text;
-            usu.IDPersona = Convert.ToInt32(this.idPersonaTextBox.Text);
-            usu.ID = Convert.ToInt32(this.idUsuarioTextBox.Text);
             usu.Habilitado = this.habilitadoCheckBox.Checked;
+            usu.Clave = this.claveTextBox.Text;
+            //falta validar q las contraseñas sean iguales
+
         }
 
         private void SaveEntity(Usuario usu)
@@ -122,12 +111,12 @@ namespace UI.Web
                     this.LoadGrid();
                     break;
                 case FormModes.Baja:
-                    this.DeleteEntity(this.SelectedID);
+                    this.DeleteEntity((int)GridView1.SelectedValue);
                     this.LoadGrid();
                     break;
                 case FormModes.Modificacion:
                     this.Entity = new Usuario();
-                    this.Entity.ID = this.SelectedID;
+                    this.Entity.ID = (int)GridView1.SelectedValue;
                     this.Entity.State = BusinessEntity.States.Modified;
                     this.LoadEntity(this.Entity);
                     this.SaveEntity(this.Entity);
@@ -150,17 +139,6 @@ namespace UI.Web
             this.repetirClaveLabel.Visible = enable;
         }
 
-        protected void eliminarLinkButton_Click(object sender, EventArgs e)
-        {
-            if (this.IsEntitySelected)
-            {
-                this.formPanel.Visible = true;
-                this.FormMode = FormModes.Baja;
-                this.EnableForm(false);
-                this.LoadForm(this.SelectedID);
-            }
-        }
-
         private void DeleteEntity(int id)
         {
             this.Logic.Delete(id);
@@ -181,6 +159,31 @@ namespace UI.Web
             this.usuarioTextBox.Text = string.Empty;
             this.habilitadoCheckBox.Checked = false;
         }
+
+        protected void editarLinkButton_Click1(object sender, EventArgs e)
+        {
+            if (GridView1.SelectedIndex >= 0)
+            {
+                this.EnableForm(true);
+                this.formPanel.Visible = true;
+                this.FormMode = FormModes.Modificacion;
+                this.LoadForm((int)GridView1.SelectedValue);
+            }
+        }
+
+        protected void eliminarLinkButton_Click1(object sender, EventArgs e)
+        {
+
+            if (GridView1.SelectedIndex >= 0)
+            {
+                this.formPanel.Visible = true;
+                this.FormMode = FormModes.Baja;
+                this.EnableForm(true);
+                this.LoadForm((int) GridView1.SelectedValue);
+            }
+        }
+
+       
         
 
 

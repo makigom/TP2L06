@@ -140,7 +140,7 @@ namespace Data.Database
         
                 SqlCommand cmdSave = new SqlCommand(
                     "UPDATE usuarios SET nombre_usuario=@nombre_usuario, clave=@clave,"
-                    + " habilitado=@habilitado WHERE id_usuario=@id", sqlConn);              
+                    + " habilitado=@habilitado WHERE id_usuario=@id_usuario", sqlConn);              
                 
                 cmdSave.Parameters.Add("@id_usuario", SqlDbType.Int).Value = usuario.ID;
                 cmdSave.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario;
