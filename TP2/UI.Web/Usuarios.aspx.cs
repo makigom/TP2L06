@@ -9,7 +9,7 @@ using Business.Logic;
 
 namespace UI.Web
 {
-    public partial class Usuarios : System.Web.UI.Page
+    public partial class Usuarios : BasePage
     {
         UsuarioLogic _logic;
         private UsuarioLogic Logic
@@ -32,13 +32,7 @@ namespace UI.Web
             if (!IsPostBack) LoadGrid();
         }
 
-        public enum FormModes { Alta, Baja, Modificacion }
-
-        public FormModes FormMode
-        {
-            get { return (FormModes)this.ViewState["FormMode"]; }
-            set { this.ViewState["FormMode"] = value; }
-        }
+        
         private Usuario _Entity;
 
         private Usuario Entity
@@ -47,29 +41,15 @@ namespace UI.Web
             set { _Entity = value;}
         }
 
-        private int SelectedID
+        private void DeleteEntity(int id)
         {
-            get
-            {
-                if (this.ViewState["SelectedID"] != null)
-                {
-                    return (int)this.ViewState["SelectedID"];
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-            set
-             {
-                this.ViewState["SelectedID"] = value;
-             }        
+            this.Logic.Delete(id);
         }
 
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.SelectedID = (int)this.GridView1.SelectedValue;
+            SelectedID = (int)this.GridView1.SelectedValue;
         }
 
         private void LoadForm(int id)
@@ -111,7 +91,7 @@ namespace UI.Web
                     this.LoadGrid();
                     break;
                 case FormModes.Baja:
-                    this.DeleteEntity((int)GridView1.SelectedValue);
+                    DeleteEntity((int)GridView1.SelectedValue);
                     this.LoadGrid();
                     break;
                 case FormModes.Modificacion:
@@ -137,11 +117,6 @@ namespace UI.Web
             this.claveLabel.Visible = enable;
             this.repetirClaveTextBox.Visible = enable;
             this.repetirClaveLabel.Visible = enable;
-        }
-
-        private void DeleteEntity(int id)
-        {
-            this.Logic.Delete(id);
         }
 
         protected void nuevoLinkButton_Click(object sender, EventArgs e)
