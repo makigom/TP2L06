@@ -20,7 +20,12 @@ namespace UI.Desktop
         public UsuarioDesktop()
             {
             InitializeComponent();
-            }
+
+            PersonasLogic PL = new PersonasLogic();
+            this.cbIDPersona.DataSource = PL.GetAll();
+            this.cbIDPersona.DisplayMember = "legajo";
+            this.cbIDPersona.ValueMember = "id_persona";   
+        }
 
         private Usuario _UsuarioActual;
 
@@ -34,19 +39,19 @@ namespace UI.Desktop
 
         public override void MapearDeDatos()
             {
-            this.txtID.Text = this.UsuarioActual.ID.ToString();        
+            this.txtID.Text = this.UsuarioActual.ID.ToString();
+            this.cbIDPersona.Text = this.cbIDPersona.Text.ToString();
             this.chkHabilitado.Checked = this.UsuarioActual.Habilitado;                      
             this.txtClave.Text = this.UsuarioActual.Clave;
-            this.txtUsuario.Text = this.UsuarioActual.NombreUsuario;
+            this.chkCambiarClave.Checked = this.UsuarioActual.CambiaClave;
+            this.txtNombreUsuario.Text = this.UsuarioActual.NombreUsuario;
 
             switch (Modo)
                 {
-
                 case ModoForm.Alta:
                         {
                         this.btnAceptar.Text = "Guardar";
                         this.UsuarioActual.State = BusinessEntity.States.New;
-                        
                         }
                     break;
                 case ModoForm.Modificacion:
@@ -79,16 +84,20 @@ namespace UI.Desktop
                 {
                 Usuario usu = new Usuario();                
                 UsuarioActual = usu;
-                 
-                this.UsuarioActual.NombreUsuario = this.txtUsuario.Text;                
-                this.UsuarioActual.Clave = this.txtClave.Text;                
+
+                this.UsuarioActual.IDPersona = Convert.ToInt32(this.cbIDPersona.SelectedValue);
+                this.UsuarioActual.NombreUsuario = this.txtNombreUsuario.Text;                
+                this.UsuarioActual.Clave = this.txtClave.Text;
+                this.UsuarioActual.CambiaClave = this.chkCambiarClave.Checked;
                 this.UsuarioActual.Habilitado = this.chkHabilitado.Checked;                 
                 }
             else if (Modo == AplicationForm.ModoForm.Modificacion)
                 {
-                this.UsuarioActual.ID = Convert.ToInt32(this.txtID.Text);            
-                this.UsuarioActual.NombreUsuario = this.txtUsuario.Text;
-                this.UsuarioActual.Clave = this.txtClave.Text;                              
+                this.UsuarioActual.ID = Convert.ToInt32(this.txtID.Text);
+                this.UsuarioActual.IDPersona = Convert.ToInt32(this.cbIDPersona.SelectedValue);
+                this.UsuarioActual.NombreUsuario = this.txtNombreUsuario.Text;
+                this.UsuarioActual.Clave = this.txtClave.Text;
+                this.UsuarioActual.CambiaClave = this.chkCambiarClave.Checked;                       
                 this.UsuarioActual.Habilitado = this.chkHabilitado.Checked;  
                 }
             }
@@ -106,11 +115,20 @@ namespace UI.Desktop
             string mensaje = "";
             bool ok = true;
 
-            foreach (Control c in this.Controls)
+            if (this.Modo == AplicationForm.ModoForm.Alta || this.Modo == AplicationForm.ModoForm.Baja)
             {
-                if ((c is TextBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+                foreach (Control c in this.Controls)
+                {
+                    if ((c is TextBox || c is ComboBox || c is CheckBox) && (c.Tag.ToString() != "ID" && c.Tag.ToString() != "NuevaClave" && c.Tag.ToString() != "ConfirmarNuevaClave") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+                }
             }
-
+            else if (this.Modo == AplicationForm.ModoForm.Modificacion)
+            {
+                foreach (Control c in this.Controls)
+                {
+                    if ((c is TextBox || c is ComboBox || c is CheckBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+                }
+            }
             if (!string.IsNullOrEmpty(mensaje))
             {
                 mensaje = "Por favor complete los siguientes campos:\n" + mensaje;
@@ -122,6 +140,7 @@ namespace UI.Desktop
                 mensaje += "La contraseña ingresada no coincide o posee menos de ocho caracteres.\n";
                 ok = false;
             }
+            
 
             if (!string.IsNullOrEmpty(mensaje)) Notificar(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return ok;
@@ -132,7 +151,6 @@ namespace UI.Desktop
             if (Validar() == true)
                 {
                 GuardarCambios();
-
                 this.Close();
                 }
             }
@@ -167,12 +185,5 @@ namespace UI.Desktop
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?","Cancelar", MessageBoxButtons.YesNo));
             if (DR == DialogResult.Yes) this.Close();      
             }
-
-        private void UsuarioDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.personas' Puede moverla o quitarla según sea necesario.
-            this.personasTableAdapter.Fill(this.tp2_netDataSet.personas);
-
-        }
         }
     }

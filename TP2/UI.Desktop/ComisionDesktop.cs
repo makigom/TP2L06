@@ -18,6 +18,11 @@ namespace UI.Desktop
         public ComisionDesktop()
         {
             InitializeComponent();
+
+            PlanLogic PL = new PlanLogic();
+            this.cbIDPlan.DataSource = PL.GetAll();
+            this.cbIDPlan.DisplayMember = "descripcion";
+            this.cbIDPlan.ValueMember = "id_plan";
         }
 
         private Comision _ComisionActual;
@@ -75,28 +80,25 @@ namespace UI.Desktop
             if (Modo == AplicationForm.ModoForm.Alta)
                 {
                 Comision C = new Comision();                
-                
                 ComisionActual = C;
                  
                 this.ComisionActual.Descripcion = this.txtDescripcion.Text;                
                 this.ComisionActual.AnioEspecialidad = Convert.ToInt32(this.txtAnioEspecialidad.Text);
-                this.cbIDPlan.Text = this.ComisionActual.IDPlan.ToString();
+                this.ComisionActual.IDPlan = Convert.ToInt32(this.cbIDPlan.SelectedValue);
                 }
             else if (Modo == AplicationForm.ModoForm.Modificacion)
                 {
                 this.ComisionActual.ID = Convert.ToInt32(this.txtID.Text);            
                 this.ComisionActual.Descripcion = this.txtDescripcion.Text;                              
                 this.ComisionActual.AnioEspecialidad = Convert.ToInt32(this.txtAnioEspecialidad.Text);
-                this.cbIDPlan.Text = this.ComisionActual.IDPlan.ToString();
+                this.ComisionActual.IDPlan = Convert.ToInt32(this.cbIDPlan.SelectedValue);
                 }
             }
 
         public override void GuardarCambios() 
             {
             MapearADatos();
-
             ComisionLogic CL = new ComisionLogic();
-
             CL.Save(ComisionActual);
             }
 
@@ -107,7 +109,7 @@ namespace UI.Desktop
 
             foreach (Control c in this.Controls)
             {
-                if ((c is TextBox) && (c.Name != "txtID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Name + "\n";
+                if ((c is TextBox || c is ComboBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Name + "\n";
             }
 
             if (!string.IsNullOrEmpty(mensaje))
@@ -138,11 +140,8 @@ namespace UI.Desktop
         public ComisionDesktop(int ID, ModoForm modo): this()
             {
             this.Modo = modo;
-            
             ComisionLogic CL = new ComisionLogic();
-
             ComisionActual = CL.GetOne(ID);
-            
             MapearDeDatos();
             }
 
@@ -151,7 +150,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -159,15 +157,7 @@ namespace UI.Desktop
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
-
             if (DR == DialogResult.Yes) this.Close(); 
-        }
-
-        private void ComisionDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.planes' Puede moverla o quitarla según sea necesario.
-            this.planesTableAdapter.Fill(this.tp2_netDataSet.planes);
-
         }
     }
 }

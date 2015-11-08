@@ -18,6 +18,11 @@ namespace UI.Desktop
         public MateriaDesktop()
         {
             InitializeComponent();
+
+            PlanLogic PL = new PlanLogic();
+            this.cbIDPlan.DataSource = PL.GetAll();
+            this.cbIDPlan.DisplayMember = "descripcion";
+            this.cbIDPlan.ValueMember = "id_plan";
         }
 
         private Materia _MateriaActual;
@@ -70,7 +75,6 @@ namespace UI.Desktop
 
         public override void MapearADatos()
             {
-            
             if (Modo == AplicationForm.ModoForm.Alta)
                 {
                 Materia mat = new Materia();                
@@ -78,7 +82,7 @@ namespace UI.Desktop
                  
                 this.MateriaActual.ID = Convert.ToInt32(this.txtID.Text);                
                 this.MateriaActual.Descripcion = this.txtDescripcion.Text;
-                this.MateriaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.Text);                
+                this.MateriaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.SelectedValue);                
                 this.MateriaActual.HsSemanales = Convert.ToInt32(this.txtHorasSemanales.Text);                
                 this.MateriaActual.HsTotales = Convert.ToInt32(this.txtHorasTotales.Text);           
                 }
@@ -86,7 +90,7 @@ namespace UI.Desktop
                 {
                 this.MateriaActual.ID = Convert.ToInt32(this.txtID.Text);                
                 this.MateriaActual.Descripcion = this.txtDescripcion.Text;
-                this.MateriaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.Text);                
+                this.MateriaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.SelectedValue);                
                 this.MateriaActual.HsSemanales = Convert.ToInt32(this.txtHorasSemanales.Text);                
                 this.MateriaActual.HsTotales = Convert.ToInt32(this.txtHorasTotales.Text);  
                 }
@@ -106,7 +110,7 @@ namespace UI.Desktop
 
           foreach(Control c in this.Controls)
           {
-              if ((c is TextBox) && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+              if ((c is TextBox || c is ComboBox) && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
           }
 
           if (!string.IsNullOrEmpty(mensaje))
@@ -148,7 +152,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -157,13 +160,6 @@ namespace UI.Desktop
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
             if (DR == DialogResult.Yes) this.Close();
-        }
-
-        private void MateriaDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.planes' Puede moverla o quitarla según sea necesario.
-            this.planesTableAdapter.Fill(this.tp2_netDataSet.planes);
-
         }
     }
 }

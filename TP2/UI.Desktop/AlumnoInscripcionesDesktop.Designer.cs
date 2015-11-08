@@ -39,20 +39,11 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.cbIDCurso = new System.Windows.Forms.ComboBox();
-            this.cursosBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
-            this.cursosBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.cursosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.cursosTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.cursosTableAdapter();
             this.mtbNota = new System.Windows.Forms.MaskedTextBox();
             this.ttNota = new System.Windows.Forms.ToolTip(this.components);
             this.mtbIDAlumno = new System.Windows.Forms.MaskedTextBox();
             this.ttIDAlumno = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.cursosBindingSource2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cursosBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cursosBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // lblID
@@ -115,7 +106,7 @@
             this.txtCondicion.Location = new System.Drawing.Point(120, 145);
             this.txtCondicion.Name = "txtCondicion";
             this.txtCondicion.Size = new System.Drawing.Size(100, 20);
-            this.txtCondicion.TabIndex = 5;
+            this.txtCondicion.TabIndex = 6;
             this.txtCondicion.Tag = "Condicion";
             // 
             // btnAceptar
@@ -123,7 +114,7 @@
             this.btnAceptar.Location = new System.Drawing.Point(80, 189);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
-            this.btnAceptar.TabIndex = 6;
+            this.btnAceptar.TabIndex = 7;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -141,8 +132,6 @@
             // 
             // cbIDCurso
             // 
-            this.cbIDCurso.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.cursosBindingSource2, "id_curso", true));
-            this.cbIDCurso.DataSource = this.cursosBindingSource1;
             this.cbIDCurso.DisplayMember = "id_curso";
             this.cbIDCurso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIDCurso.FormattingEnabled = true;
@@ -150,36 +139,18 @@
             this.cbIDCurso.Name = "cbIDCurso";
             this.cbIDCurso.Size = new System.Drawing.Size(100, 21);
             this.cbIDCurso.TabIndex = 2;
-            this.cbIDCurso.Tag = "IdCurso";
+            this.cbIDCurso.Tag = "IDCurso";
             this.cbIDCurso.ValueMember = "id_curso";
-            // 
-            // cursosBindingSource2
-            // 
-            this.cursosBindingSource2.DataMember = "cursos";
-            this.cursosBindingSource2.DataSource = this.tp2_netDataSet;
-            // 
-            // tp2_netDataSet
-            // 
-            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
-            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // cursosBindingSource1
-            // 
-            this.cursosBindingSource1.DataMember = "cursos";
-            this.cursosBindingSource1.DataSource = this.tp2_netDataSet;
             // 
             // btnBuscar
             // 
             this.btnBuscar.Location = new System.Drawing.Point(262, 90);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscar.TabIndex = 8;
-            this.btnBuscar.Text = "Buscar..";
+            this.btnBuscar.TabIndex = 4;
+            this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
-            // 
-            // cursosTableAdapter
-            // 
-            this.cursosTableAdapter.ClearBeforeFill = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // mtbNota
             // 
@@ -187,7 +158,8 @@
             this.mtbNota.Mask = "99";
             this.mtbNota.Name = "mtbNota";
             this.mtbNota.Size = new System.Drawing.Size(100, 20);
-            this.mtbNota.TabIndex = 99;
+            this.mtbNota.TabIndex = 5;
+            this.mtbNota.Tag = "Nota";
             this.mtbNota.ValidatingType = typeof(int);
             this.mtbNota.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.mtbNota_MaskInputRejected);
             // 
@@ -197,7 +169,8 @@
             this.mtbIDAlumno.Mask = "99999";
             this.mtbIDAlumno.Name = "mtbIDAlumno";
             this.mtbIDAlumno.Size = new System.Drawing.Size(100, 20);
-            this.mtbIDAlumno.TabIndex = 100;
+            this.mtbIDAlumno.TabIndex = 3;
+            this.mtbIDAlumno.Tag = "IDAlumno";
             this.mtbIDAlumno.ValidatingType = typeof(int);
             this.mtbIDAlumno.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.mtbIDAlumno_MaskInputRejected);
             // 
@@ -221,11 +194,6 @@
             this.Controls.Add(this.lblID);
             this.Name = "AlumnoInscripcionesDesktop";
             this.Text = "AlumnoInscripcionesDesktop";
-            this.Load += new System.EventHandler(this.AlumnoInscripcionesDesktop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.cursosBindingSource2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cursosBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cursosBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,12 +211,7 @@
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ComboBox cbIDCurso;
-        private System.Windows.Forms.BindingSource cursosBindingSource;
         private System.Windows.Forms.Button btnBuscar;
-        private tp2_netDataSet tp2_netDataSet;
-        private System.Windows.Forms.BindingSource cursosBindingSource1;
-        private tp2_netDataSetTableAdapters.cursosTableAdapter cursosTableAdapter;
-        private System.Windows.Forms.BindingSource cursosBindingSource2;
         private System.Windows.Forms.MaskedTextBox mtbNota;
         private System.Windows.Forms.ToolTip ttNota;
         private System.Windows.Forms.MaskedTextBox mtbIDAlumno;

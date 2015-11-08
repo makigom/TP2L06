@@ -38,7 +38,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(81, 120);
+            this.btnAceptar.Location = new System.Drawing.Point(54, 96);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 3;
@@ -49,7 +49,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(162, 120);
+            this.btnCancelar.Location = new System.Drawing.Point(150, 96);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 4;
@@ -60,7 +60,7 @@
             // lblID
             // 
             this.lblID.AutoSize = true;
-            this.lblID.Location = new System.Drawing.Point(44, 47);
+            this.lblID.Location = new System.Drawing.Point(12, 25);
             this.lblID.Name = "lblID";
             this.lblID.Size = new System.Drawing.Size(21, 13);
             this.lblID.TabIndex = 2;
@@ -69,7 +69,7 @@
             // lblDescripcion
             // 
             this.lblDescripcion.AutoSize = true;
-            this.lblDescripcion.Location = new System.Drawing.Point(44, 75);
+            this.lblDescripcion.Location = new System.Drawing.Point(12, 58);
             this.lblDescripcion.Name = "lblDescripcion";
             this.lblDescripcion.Size = new System.Drawing.Size(63, 13);
             this.lblDescripcion.TabIndex = 3;
@@ -77,24 +77,26 @@
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(113, 40);
+            this.txtID.Location = new System.Drawing.Point(90, 22);
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(100, 20);
             this.txtID.TabIndex = 1;
+            this.txtID.Tag = "ID";
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(113, 72);
+            this.txtDescripcion.Location = new System.Drawing.Point(90, 51);
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(100, 20);
             this.txtDescripcion.TabIndex = 2;
+            this.txtDescripcion.Tag = "Descripcion";
             // 
             // EspecialidadDesktop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(251, 161);
+            this.ClientSize = new System.Drawing.Size(237, 141);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.lblDescripcion);

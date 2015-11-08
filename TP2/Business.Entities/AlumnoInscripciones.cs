@@ -10,21 +10,14 @@ namespace Business.Entities
         {
        
         private string _Condicion;
-
         private int _IDAlumno;
-
         private int _IDCurso;
-
         private int _Nota;
        
-
         public string Condicion
             {
 
-            get
-                {
-                return _Condicion;
-                }
+            get{return _Condicion;}
             set
                 {
                 _Condicion= value;

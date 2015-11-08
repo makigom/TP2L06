@@ -18,6 +18,11 @@ namespace UI.Desktop
         public ModuloUsuarioDesktop()
         {
             InitializeComponent();
+
+            ModuloUsuarioLogic MUL = new ModuloUsuarioLogic();
+            this.cbIDModulo.DataSource = MUL.GetAll();
+            this.cbIDModulo.DisplayMember = "id_modulo_usuario";
+            this.cbIDModulo.ValueMember = "id_modulo_usuario";
         }
 
         private ModuloUsuario _MDActual;
@@ -37,7 +42,6 @@ namespace UI.Desktop
 
             switch (Modo)
             {
-
                 case ModoForm.Alta:
                     {
                         this.btnAceptar.Text = "Guardar";
@@ -69,21 +73,19 @@ namespace UI.Desktop
 
         public override void MapearADatos()
         {
-
             if (Modo == AplicationForm.ModoForm.Alta)
             {
                 ModuloUsuario modousu = new ModuloUsuario();
                 MDActual = modousu;
 
                 this.MDActual.ID = Convert.ToInt32(this.txtID.Text);
-                this.MDActual.IDModulo = Convert.ToInt32(this.cbIDModulo.Text);
+                this.MDActual.IDModulo = Convert.ToInt32(this.cbIDModulo.SelectedValue);
                 this.MDActual.IDUsuario = Convert.ToInt32(this.txtIDUsuario.Text);
-
             }
             else if (Modo == AplicationForm.ModoForm.Modificacion)
             {
                 this.MDActual.ID = Convert.ToInt32(this.txtID.Text);
-                this.MDActual.IDModulo = Convert.ToInt32(this.cbIDModulo.Text);
+                this.MDActual.IDModulo = Convert.ToInt32(this.cbIDModulo.SelectedValue);
                 this.MDActual.IDUsuario = Convert.ToInt32(this.txtIDUsuario.Text);
             }
         }
@@ -95,7 +97,25 @@ namespace UI.Desktop
             ml.Save(MDActual);
         }
 
-        //Agregandole new a los metodos void damos por sabido que el miembro que modificamos oculta el miembro que se hereda de la clase base.
+        public override bool Validar()
+        {
+            string mensaje = "";
+            bool ok = true;
+
+            foreach (Control c in this.Controls)
+            {
+                if ((c is TextBox || c is ComboBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+            }
+
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                mensaje = "Por favor complete los siguientes campos:\n" + mensaje;
+                ok = false;
+            }
+
+            if (!string.IsNullOrEmpty(mensaje)) Notificar(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return ok;
+        }
 
         public new void Notificar(string titulo, string mensaje, MessageBoxButtons botones, MessageBoxIcon icono)
         {
@@ -127,7 +147,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -136,13 +155,6 @@ namespace UI.Desktop
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
             if (DR == DialogResult.Yes) this.Close(); 
-        }
-
-        private void ModuloUsuarioDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.modulos' Puede moverla o quitarla según sea necesario.
-            this.modulosTableAdapter.Fill(this.tp2_netDataSet.modulos);
-
         }
     }
 }

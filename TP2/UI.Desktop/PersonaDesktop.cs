@@ -19,6 +19,11 @@ namespace UI.Desktop
         public PersonaDesktop()
         {
             InitializeComponent();
+           
+            PlanLogic PL = new PlanLogic();
+            this.cbIDPlan.DataSource = PL.GetAll();
+            this.cbIDPlan.DisplayMember = "descripcion";
+            this.cbIDPlan.ValueMember = "id_plan";
         }
         private Persona _PersonaActual;
 
@@ -37,11 +42,11 @@ namespace UI.Desktop
             this.txtNombre.Text = this.PersonaActual.Nombre;           
             this.txtDireccion.Text = this.PersonaActual.Direccion;      
             this.txtEmail.Text = this.PersonaActual.Email;            
-            this.txtLegajo.Text = this.PersonaActual.Legajo.ToString();
-            this.txtTelefono.Text = this.PersonaActual.Telefono;
+            this.mtbLegajo.Text = this.PersonaActual.Legajo.ToString();
+            this.mtbTelefono.Text = this.PersonaActual.Telefono;
             this.txtTipoPersona.Text = this.PersonaActual.TiposPersona.ToString();
             this.cbIDPlan.Text = this.PersonaActual.IDPlan.ToString();
-            this.txtFechaNacimiento.Text = this.PersonaActual.FechaNacimiento.ToString();
+            this.mtbFechaNacimiento.Text = this.PersonaActual.FechaNacimiento.ToString();
 
             switch (Modo)
                 {
@@ -77,22 +82,21 @@ namespace UI.Desktop
 
         public override void MapearADatos()
             {
-            
             if (Modo == AplicationForm.ModoForm.Alta)
                 {
                 Persona per = new Persona();                
-                
                 PersonaActual = per;
                  
-                this.PersonaActual.ID = Convert.ToInt32(this.txtID.Text);                
-                this.PersonaActual.Direccion = this.txtDireccion.Text;                
                 this.PersonaActual.Nombre = this.txtNombre.Text;                
-                this.PersonaActual.Apellido = this.txtApellido.Text;                
-                this.PersonaActual.Legajo = Convert.ToInt32(txtLegajo.Text);
-                this.PersonaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.Text); 
-                this.PersonaActual.Telefono = this.txtTelefono.Text;
-                this.PersonaActual.TiposPersona = Convert.ToInt32(this.txtTipoPersona);
-                this.PersonaActual.FechaNacimiento = Convert.ToDateTime(this.txtFechaNacimiento);
+                this.PersonaActual.Apellido = this.txtApellido.Text;
+                this.PersonaActual.FechaNacimiento = Convert.ToDateTime(this.mtbFechaNacimiento.Text);
+                this.PersonaActual.Legajo = Convert.ToInt32(this.mtbLegajo.Text);
+                this.PersonaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.SelectedValue);
+                this.PersonaActual.Direccion = this.txtDireccion.Text;                
+                this.PersonaActual.Telefono = this.mtbTelefono.Text;
+                this.PersonaActual.Email = this.txtEmail.Text;
+                this.PersonaActual.TiposPersona = Convert.ToInt32(this.txtTipoPersona.Text);
+
                 }
             else if (Modo == AplicationForm.ModoForm.Modificacion)
                 {
@@ -100,11 +104,12 @@ namespace UI.Desktop
                     this.PersonaActual.Direccion = this.txtDireccion.Text;
                     this.PersonaActual.Nombre = this.txtNombre.Text;
                     this.PersonaActual.Apellido = this.txtApellido.Text;
-                    this.PersonaActual.Legajo = Convert.ToInt32(txtLegajo.Text);
-                    this.PersonaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.Text);
-                    this.PersonaActual.Telefono = this.txtTelefono.Text;
-                    this.PersonaActual.TiposPersona = Convert.ToInt32(this.txtTipoPersona);
-                    this.PersonaActual.FechaNacimiento = Convert.ToDateTime(this.txtFechaNacimiento);
+                    this.PersonaActual.FechaNacimiento = Convert.ToDateTime(this.mtbFechaNacimiento.Text);
+                    this.PersonaActual.Legajo = Convert.ToInt32(this.mtbLegajo.Text);
+                    this.PersonaActual.IDPlan = Convert.ToInt32(this.cbIDPlan.SelectedValue);
+                    this.PersonaActual.Telefono = this.mtbTelefono.Text;
+                    this.PersonaActual.Email = this.txtEmail.Text;
+                    this.PersonaActual.TiposPersona = Convert.ToInt32(this.txtTipoPersona.Text);
                 }
             }
 
@@ -124,14 +129,12 @@ namespace UI.Desktop
 
           foreach(Control c in this.Controls)
           {
-              if ((c is TextBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+              if ((c is TextBox || c is ComboBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
           }
 
-
-          if (!Util.Util.IsDate (this.txtFechaNac.Text)) 
+          if (!(mtbFechaNacimiento.MaskFull || mtbLegajo.MaskFull || mtbTelefono.MaskFull))
           {
-            mensaje += "La fecha de nacimiento ingresada no es valida.\n";
-
+              mensaje = "Fecha de nacimiento y/o Legajo y/o Telefono estan vacios.\n" + mensaje;
               ok = false;
           }
 
@@ -191,11 +194,22 @@ namespace UI.Desktop
             if (DR == DialogResult.Yes) this.Close();      
         }
 
-        private void PersonaDesktop_Load(object sender, EventArgs e)
+        private void mtbFechaNacimiento_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.planes' Puede moverla o quitarla según sea necesario.
-            this.planesTableAdapter.Fill(this.tp2_netDataSet.planes);
+            ttFechaNacimiento.ToolTipTitle = "Tipo de dato no valido";
+            ttFechaNacimiento.Show("El campo debe tener el siguiente formato DD/MM/AAAA", mtbFechaNacimiento);
+        }
 
+        private void mtbTelefono_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            ttTelefono.ToolTipTitle = "Tipo de dato no valido";
+            ttTelefono.Show("El campo admite solo digitos con una longitud máxima de 6 digitos", mtbTelefono);
+        }
+
+        private void mtbLegajo_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            ttLegajo.ToolTipTitle = "Tipo de dato no valido";
+            ttLegajo.Show("El campo admite solo digitos con una longitud máxima de 6 digitos", mtbLegajo);
         }
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.txtID = new System.Windows.Forms.TextBox();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
@@ -37,13 +36,6 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblIDEspecialidad = new System.Windows.Forms.Label();
             this.cbIDEspecialidad = new System.Windows.Forms.ComboBox();
-            this.especialidadesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
-            this.especialidadesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.especialidadesTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.especialidadesTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.especialidadesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.especialidadesBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtID
@@ -53,6 +45,7 @@
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(100, 20);
             this.txtID.TabIndex = 1;
+            this.txtID.Tag = "ID";
             // 
             // txtDescripcion
             // 
@@ -60,6 +53,7 @@
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(100, 20);
             this.txtDescripcion.TabIndex = 3;
+            this.txtDescripcion.Tag = "Descripcion";
             // 
             // lblID
             // 
@@ -111,29 +105,15 @@
             // 
             // cbIDEspecialidad
             // 
-            this.cbIDEspecialidad.DataSource = this.especialidadesBindingSource1;
-            this.cbIDEspecialidad.DisplayMember = "descripcion";
+            this.cbIDEspecialidad.DisplayMember = "id_especialidad";
             this.cbIDEspecialidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIDEspecialidad.FormattingEnabled = true;
             this.cbIDEspecialidad.Location = new System.Drawing.Point(129, 45);
             this.cbIDEspecialidad.Name = "cbIDEspecialidad";
             this.cbIDEspecialidad.Size = new System.Drawing.Size(100, 21);
-            this.cbIDEspecialidad.TabIndex = 9;
+            this.cbIDEspecialidad.TabIndex = 2;
+            this.cbIDEspecialidad.Tag = "IDEspecialidad";
             this.cbIDEspecialidad.ValueMember = "id_especialidad";
-            // 
-            // tp2_netDataSet
-            // 
-            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
-            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // especialidadesBindingSource1
-            // 
-            this.especialidadesBindingSource1.DataMember = "especialidades";
-            this.especialidadesBindingSource1.DataSource = this.tp2_netDataSet;
-            // 
-            // especialidadesTableAdapter
-            // 
-            this.especialidadesTableAdapter.ClearBeforeFill = true;
             // 
             // PlanDesktop
             // 
@@ -150,10 +130,6 @@
             this.Controls.Add(this.txtID);
             this.Name = "PlanDesktop";
             this.Text = "PlanDesktop";
-            this.Load += new System.EventHandler(this.PlanDesktop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.especialidadesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.especialidadesBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,9 +145,5 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label lblIDEspecialidad;
         private System.Windows.Forms.ComboBox cbIDEspecialidad;
-        private System.Windows.Forms.BindingSource especialidadesBindingSource;
-        private tp2_netDataSet tp2_netDataSet;
-        private System.Windows.Forms.BindingSource especialidadesBindingSource1;
-        private tp2_netDataSetTableAdapters.especialidadesTableAdapter especialidadesTableAdapter;
     }
 }

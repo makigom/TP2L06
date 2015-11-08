@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.txtClave = new System.Windows.Forms.TextBox();
             this.lblClave = new System.Windows.Forms.Label();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtNombreUsuario = new System.Windows.Forms.TextBox();
             this.txtConfirmarClave = new System.Windows.Forms.TextBox();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblConfirmarClave = new System.Windows.Forms.Label();
@@ -42,11 +41,11 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblIDPersona = new System.Windows.Forms.Label();
             this.cbIDPersona = new System.Windows.Forms.ComboBox();
-            this.personasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
-            this.personasTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.personasTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.personasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
+            this.chkCambiarClave = new System.Windows.Forms.CheckBox();
+            this.lblClaveNueva = new System.Windows.Forms.Label();
+            this.txtNuevaClave = new System.Windows.Forms.TextBox();
+            this.txtConfirmarNuevaClave = new System.Windows.Forms.TextBox();
+            this.lblConfirmarClaveNueva = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtID
@@ -69,11 +68,11 @@
             // 
             // txtClave
             // 
-            this.txtClave.Location = new System.Drawing.Point(376, 57);
+            this.txtClave.Location = new System.Drawing.Point(412, 57);
             this.txtClave.Name = "txtClave";
             this.txtClave.PasswordChar = '*';
             this.txtClave.Size = new System.Drawing.Size(155, 20);
-            this.txtClave.TabIndex = 5;
+            this.txtClave.TabIndex = 6;
             this.txtClave.Tag = "Clave";
             // 
             // lblClave
@@ -85,21 +84,21 @@
             this.lblClave.TabIndex = 7;
             this.lblClave.Text = "Clave";
             // 
-            // txtUsuario
+            // txtNombreUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(376, 32);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(155, 20);
-            this.txtUsuario.TabIndex = 4;
-            this.txtUsuario.Tag = "Usuario";
+            this.txtNombreUsuario.Location = new System.Drawing.Point(412, 31);
+            this.txtNombreUsuario.Name = "txtNombreUsuario";
+            this.txtNombreUsuario.Size = new System.Drawing.Size(155, 20);
+            this.txtNombreUsuario.TabIndex = 5;
+            this.txtNombreUsuario.Tag = "NombreUsuario";
             // 
             // txtConfirmarClave
             // 
-            this.txtConfirmarClave.Location = new System.Drawing.Point(376, 84);
+            this.txtConfirmarClave.Location = new System.Drawing.Point(412, 83);
             this.txtConfirmarClave.Name = "txtConfirmarClave";
             this.txtConfirmarClave.PasswordChar = '*';
             this.txtConfirmarClave.Size = new System.Drawing.Size(155, 20);
-            this.txtConfirmarClave.TabIndex = 6;
+            this.txtConfirmarClave.TabIndex = 7;
             this.txtConfirmarClave.Tag = "ConfirmarClave";
             // 
             // lblUsuario
@@ -127,15 +126,16 @@
             this.chkHabilitado.Name = "chkHabilitado";
             this.chkHabilitado.Size = new System.Drawing.Size(73, 17);
             this.chkHabilitado.TabIndex = 3;
+            this.chkHabilitado.Tag = "Habilitado";
             this.chkHabilitado.Text = "Habilitado";
             this.chkHabilitado.UseVisualStyleBackColor = true;
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(172, 131);
+            this.btnAceptar.Location = new System.Drawing.Point(172, 184);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
-            this.btnAceptar.TabIndex = 7;
+            this.btnAceptar.TabIndex = 10;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -144,7 +144,7 @@
             // btnCancelar
             // 
             this.btnCancelar.BackColor = System.Drawing.SystemColors.Control;
-            this.btnCancelar.Location = new System.Drawing.Point(285, 131);
+            this.btnCancelar.Location = new System.Drawing.Point(285, 184);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 16;
@@ -163,8 +163,7 @@
             // 
             // cbIDPersona
             // 
-            this.cbIDPersona.DataSource = this.personasBindingSource;
-            this.cbIDPersona.DisplayMember = "tipo_persona";
+            this.cbIDPersona.DisplayMember = "id_persona";
             this.cbIDPersona.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIDPersona.Location = new System.Drawing.Point(92, 57);
             this.cbIDPersona.Name = "cbIDPersona";
@@ -173,26 +172,64 @@
             this.cbIDPersona.Tag = "IDPersona";
             this.cbIDPersona.ValueMember = "id_persona";
             // 
-            // personasBindingSource
+            // chkCambiarClave
             // 
-            this.personasBindingSource.DataMember = "personas";
-            this.personasBindingSource.DataSource = this.tp2_netDataSet;
+            this.chkCambiarClave.AutoSize = true;
+            this.chkCambiarClave.Location = new System.Drawing.Point(31, 123);
+            this.chkCambiarClave.Name = "chkCambiarClave";
+            this.chkCambiarClave.Size = new System.Drawing.Size(94, 17);
+            this.chkCambiarClave.TabIndex = 4;
+            this.chkCambiarClave.Tag = "CambiarClave";
+            this.chkCambiarClave.Text = "Cambiar Clave";
+            this.chkCambiarClave.UseVisualStyleBackColor = true;
             // 
-            // tp2_netDataSet
+            // lblClaveNueva
             // 
-            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
-            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.lblClaveNueva.AutoSize = true;
+            this.lblClaveNueva.Location = new System.Drawing.Point(282, 117);
+            this.lblClaveNueva.Name = "lblClaveNueva";
+            this.lblClaveNueva.Size = new System.Drawing.Size(69, 13);
+            this.lblClaveNueva.TabIndex = 19;
+            this.lblClaveNueva.Text = "Clave Nueva";
             // 
-            // personasTableAdapter
+            // txtNuevaClave
             // 
-            this.personasTableAdapter.ClearBeforeFill = true;
+            this.txtNuevaClave.Location = new System.Drawing.Point(412, 109);
+            this.txtNuevaClave.Name = "txtNuevaClave";
+            this.txtNuevaClave.ReadOnly = true;
+            this.txtNuevaClave.Size = new System.Drawing.Size(155, 20);
+            this.txtNuevaClave.TabIndex = 8;
+            this.txtNuevaClave.Tag = "NuevaClave";
+            // 
+            // txtConfirmarNuevaClave
+            // 
+            this.txtConfirmarNuevaClave.Location = new System.Drawing.Point(412, 135);
+            this.txtConfirmarNuevaClave.Name = "txtConfirmarNuevaClave";
+            this.txtConfirmarNuevaClave.ReadOnly = true;
+            this.txtConfirmarNuevaClave.Size = new System.Drawing.Size(155, 20);
+            this.txtConfirmarNuevaClave.TabIndex = 9;
+            this.txtConfirmarNuevaClave.Tag = "ConfirmarNuevaClave";
+            // 
+            // lblConfirmarClaveNueva
+            // 
+            this.lblConfirmarClaveNueva.AutoSize = true;
+            this.lblConfirmarClaveNueva.Location = new System.Drawing.Point(282, 142);
+            this.lblConfirmarClaveNueva.Name = "lblConfirmarClaveNueva";
+            this.lblConfirmarClaveNueva.Size = new System.Drawing.Size(116, 13);
+            this.lblConfirmarClaveNueva.TabIndex = 22;
+            this.lblConfirmarClaveNueva.Text = "Confirmar Clave Nueva";
             // 
             // UsuarioDesktop
             // 
             this.AcceptButton = this.btnAceptar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(537, 174);
+            this.ClientSize = new System.Drawing.Size(579, 219);
+            this.Controls.Add(this.lblConfirmarClaveNueva);
+            this.Controls.Add(this.txtConfirmarNuevaClave);
+            this.Controls.Add(this.txtNuevaClave);
+            this.Controls.Add(this.lblClaveNueva);
+            this.Controls.Add(this.chkCambiarClave);
             this.Controls.Add(this.cbIDPersona);
             this.Controls.Add(this.lblIDPersona);
             this.Controls.Add(this.btnCancelar);
@@ -201,16 +238,13 @@
             this.Controls.Add(this.lblConfirmarClave);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.txtConfirmarClave);
-            this.Controls.Add(this.txtUsuario);
+            this.Controls.Add(this.txtNombreUsuario);
             this.Controls.Add(this.lblClave);
             this.Controls.Add(this.txtClave);
             this.Controls.Add(this.lblID);
             this.Controls.Add(this.txtID);
             this.Name = "UsuarioDesktop";
             this.Text = "UsuarioDesktop";
-            this.Load += new System.EventHandler(this.UsuarioDesktop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.personasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,7 +256,7 @@
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.TextBox txtClave;
         private System.Windows.Forms.Label lblClave;
-        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtNombreUsuario;
         private System.Windows.Forms.TextBox txtConfirmarClave;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label lblConfirmarClave;
@@ -231,9 +265,11 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label lblIDPersona;
         private System.Windows.Forms.ComboBox cbIDPersona;
-        private tp2_netDataSet tp2_netDataSet;
-        private System.Windows.Forms.BindingSource personasBindingSource;
-        private tp2_netDataSetTableAdapters.personasTableAdapter personasTableAdapter;
+        private System.Windows.Forms.CheckBox chkCambiarClave;
+        private System.Windows.Forms.Label lblClaveNueva;
+        private System.Windows.Forms.TextBox txtNuevaClave;
+        private System.Windows.Forms.TextBox txtConfirmarNuevaClave;
+        private System.Windows.Forms.Label lblConfirmarClaveNueva;
 
     }
 }

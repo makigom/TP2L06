@@ -17,6 +17,11 @@ namespace UI.Desktop
         public PlanDesktop()
         {
             InitializeComponent();
+
+            EspecialidadLogic EL = new EspecialidadLogic();
+            this.cbIDEspecialidad.DataSource = EL.GetAll();
+            this.cbIDEspecialidad.DisplayMember = "descripcion";
+            this.cbIDEspecialidad.ValueMember = "id_especialidad";
         }
 
         private Plan _PlanActual;
@@ -31,18 +36,14 @@ namespace UI.Desktop
         public override void MapearDeDatos()
         {
             this.txtID.Text = this.PlanActual.ID.ToString();
-
             this.txtDescripcion.Text = this.PlanActual.Descripcion;
-
             this.cbIDEspecialidad.Text = this.PlanActual.IDEspecialidad.ToString();
 
             switch (Modo)
             {
-
                 case ModoForm.Alta:
                     {
                         this.btnAceptar.Text = "Guardar";
-
                         this.PlanActual.State = BusinessEntity.States.New;
                     }
                     break;
@@ -50,7 +51,6 @@ namespace UI.Desktop
                 case ModoForm.Modificacion:
                     {
                         this.btnAceptar.Text = "Guardar";
-
                         this.PlanActual.State = BusinessEntity.States.Modified;
                     }
                     break;
@@ -58,7 +58,6 @@ namespace UI.Desktop
                 case ModoForm.Baja:
                     {
                         this.btnAceptar.Text = "Eliminar";
-
                         this.PlanActual.State = BusinessEntity.States.Deleted;
                     }
                     break;
@@ -66,11 +65,9 @@ namespace UI.Desktop
                 case ModoForm.Consulta:
                     {
                         this.btnAceptar.Text = "Aceptar";
-
                         this.PlanActual.State = BusinessEntity.States.Unmodified;
                     }
                     break;
-
                 default:
                     break;
             }
@@ -82,46 +79,44 @@ namespace UI.Desktop
             if (Modo == AplicationForm.ModoForm.Alta)
             {   
                 Plan p = new Plan();
-
                 PlanActual = p;
 
-                this.PlanActual.IDEspecialidad = Convert.ToInt32(cbIDEspecialidad.Text);
-
+                this.PlanActual.IDEspecialidad = Convert.ToInt32(cbIDEspecialidad.SelectedValue);
                 this.PlanActual.Descripcion = this.txtDescripcion.Text;
             }
             else if (Modo == AplicationForm.ModoForm.Modificacion)
             {
                 this.PlanActual.ID = Convert.ToInt32(this.txtID.Text);
-
                 this.PlanActual.Descripcion = this.txtDescripcion.Text;
-
-                this.PlanActual.IDEspecialidad = Convert.ToInt32(this.cbIDEspecialidad.Text);
+                this.PlanActual.IDEspecialidad = Convert.ToInt32(this.cbIDEspecialidad.SelectedValue);
             }
         }
 
         public override void GuardarCambios()
         {
             MapearADatos();
-
             PlanLogic PL = new PlanLogic();
-            
             PL.Save(PlanActual);
         }
 
         public override bool Validar()
         {
-            int ban = 0;
+            string mensaje = "";
+            bool ok = true;
 
-            if ((this.cbIDEspecialidad.Text == null) || (this.txtDescripcion.Text == null))
+            foreach (Control c in this.Controls)
             {
-                ban = 1;
-
-                Notificar("Error", "Todos los campos son obligatorios, por favor completelos a todos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if ((c is TextBox || c is ComboBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
             }
 
-            if (ban == 1) return false;
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                mensaje = "Por favor complete los siguientes campos:\n" + mensaje;
+                ok = false;
+            }
 
-            else return true;
+            if (!string.IsNullOrEmpty(mensaje)) Notificar(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return ok;
         }
 
         public new void Notificar(string titulo, string mensaje, MessageBoxButtons botones, MessageBoxIcon icono)
@@ -143,11 +138,8 @@ namespace UI.Desktop
         public PlanDesktop(int ID, ModoForm modo): this()
         {
             this.Modo = modo;
-
             PlanLogic PL = new PlanLogic();
-
             PlanActual = PL.GetOne(ID);
-
             MapearDeDatos();
         }
 
@@ -156,7 +148,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -164,16 +155,7 @@ namespace UI.Desktop
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
-
             if (DR == DialogResult.Yes) this.Close();
         }
-
-        private void PlanDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.especialidades' Puede moverla o quitarla según sea necesario.
-            this.especialidadesTableAdapter.Fill(this.tp2_netDataSet.especialidades);
-
-        }
-
     }
 }

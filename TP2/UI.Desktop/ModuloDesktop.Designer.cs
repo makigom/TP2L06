@@ -93,6 +93,7 @@
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(100, 20);
             this.txtID.TabIndex = 1;
+            this.txtID.Tag = "ID";
             // 
             // txtDescripcion
             // 
@@ -100,6 +101,7 @@
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(100, 20);
             this.txtDescripcion.TabIndex = 2;
+            this.txtDescripcion.Tag = "Descripcion";
             // 
             // txtEjecuta
             // 
@@ -107,6 +109,7 @@
             this.txtEjecuta.Name = "txtEjecuta";
             this.txtEjecuta.Size = new System.Drawing.Size(100, 20);
             this.txtEjecuta.TabIndex = 3;
+            this.txtEjecuta.Tag = "Ejecuta";
             // 
             // ModuloDesktop
             // 

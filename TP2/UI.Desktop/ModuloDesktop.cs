@@ -20,10 +20,9 @@ namespace UI.Desktop
             InitializeComponent();
         }
 
-        private Business.Entities.Modulo _ModuloActual;
+        private Modulo _ModuloActual;
 
-        public Business.Entities.Modulo ModuloActual
-        
+        public Modulo ModuloActual
             {
             get { return _ModuloActual; }
 
@@ -69,12 +68,9 @@ namespace UI.Desktop
 
         public override void MapearADatos()
             {
-            
             if (Modo == AplicationForm.ModoForm.Alta)
                 {
-
                 Business.Entities.Modulo m = new Business.Entities.Modulo();
-
                 ModuloActual = m;
                  
                 this.txtDescripcion.Text = this.ModuloActual.Descripcion;           
@@ -92,27 +88,28 @@ namespace UI.Desktop
         public override void GuardarCambios() 
             {
             MapearADatos();
-
             ModuloLogic ML = new ModuloLogic();
-            
             ML.Save(ModuloActual);
             }
 
       public override bool Validar()
             {
+                string mensaje = "";
+                bool ok = true;
 
-            int ban1=0;
+                foreach (Control c in this.Controls)
+                {
+                    if ((c is TextBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+                }
 
-             if ((this.txtDescripcion.Text == null) || (this.txtDescripcion.Text == null))
-                    {
-                    ban1 = 1;
+                if (!string.IsNullOrEmpty(mensaje))
+                {
+                    mensaje = "Por favor complete los siguientes campos:\n" + mensaje;
+                    ok = false;
+                }
 
-                    Notificar("Error", "Todos los campos son obligatorios, por favor completelos a todos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-
-            if (ban1 == 1) return false;
-                
-            else return true;
+                if (!string.IsNullOrEmpty(mensaje)) Notificar(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return ok;
             }
         
         public new  void Notificar(string titulo,string mensaje,MessageBoxButtons botones,MessageBoxIcon icono)
@@ -133,11 +130,8 @@ namespace UI.Desktop
         public ModuloDesktop(int ID, ModoForm modo): this()
             {
             this.Modo = modo;
-
             ModuloLogic ML = new ModuloLogic();
-
             ModuloActual = ML.GetOne(ID);
-            
             MapearDeDatos();
             }
 
@@ -146,7 +140,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -154,7 +147,6 @@ namespace UI.Desktop
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
-            
             if (DR == DialogResult.Yes) this.Close();
         }
     }

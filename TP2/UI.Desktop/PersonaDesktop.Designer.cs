@@ -29,12 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.txtFechaNacimiento = new System.Windows.Forms.TextBox();
+            this.ttFechaNacimiento = new System.Windows.Forms.ToolTip(this.components);
+            this.ttTelefono = new System.Windows.Forms.ToolTip(this.components);
+            this.ttLegajo = new System.Windows.Forms.ToolTip(this.components);
+            this.mtbLegajo = new System.Windows.Forms.MaskedTextBox();
+            this.mtbTelefono = new System.Windows.Forms.MaskedTextBox();
+            this.mtbFechaNacimiento = new System.Windows.Forms.MaskedTextBox();
+            this.cbIDPlan = new System.Windows.Forms.ComboBox();
             this.txtFechaNac = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
-            this.txtTelefono = new System.Windows.Forms.TextBox();
-            this.txtLegajo = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtDireccion = new System.Windows.Forms.TextBox();
             this.txtTipoPersona = new System.Windows.Forms.TextBox();
@@ -50,23 +54,50 @@
             this.lblNombre = new System.Windows.Forms.Label();
             this.lblApellido = new System.Windows.Forms.Label();
             this.lblID = new System.Windows.Forms.Label();
-            this.cbIDPlan = new System.Windows.Forms.ComboBox();
-            this.planesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
-            this.planesTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.planesTableAdapter();
-            this.planesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.planesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.planesBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtFechaNacimiento
+            // mtbLegajo
             // 
-            this.txtFechaNacimiento.Location = new System.Drawing.Point(131, 114);
-            this.txtFechaNacimiento.Name = "txtFechaNacimiento";
-            this.txtFechaNacimiento.Size = new System.Drawing.Size(161, 20);
-            this.txtFechaNacimiento.TabIndex = 4;
-            this.txtFechaNacimiento.Tag = "4";
+            this.mtbLegajo.Location = new System.Drawing.Point(429, 89);
+            this.mtbLegajo.Mask = "99999";
+            this.mtbLegajo.Name = "mtbLegajo";
+            this.mtbLegajo.Size = new System.Drawing.Size(160, 20);
+            this.mtbLegajo.TabIndex = 9;
+            this.mtbLegajo.Tag = "Legajo";
+            this.mtbLegajo.ValidatingType = typeof(int);
+            this.mtbLegajo.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.mtbLegajo_MaskInputRejected);
+            // 
+            // mtbTelefono
+            // 
+            this.mtbTelefono.Location = new System.Drawing.Point(429, 37);
+            this.mtbTelefono.Mask = "000-000";
+            this.mtbTelefono.Name = "mtbTelefono";
+            this.mtbTelefono.Size = new System.Drawing.Size(160, 20);
+            this.mtbTelefono.TabIndex = 7;
+            this.mtbTelefono.Tag = "Telefono";
+            this.mtbTelefono.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.mtbTelefono_MaskInputRejected);
+            // 
+            // mtbFechaNacimiento
+            // 
+            this.mtbFechaNacimiento.Location = new System.Drawing.Point(132, 113);
+            this.mtbFechaNacimiento.Mask = "00/00/0000";
+            this.mtbFechaNacimiento.Name = "mtbFechaNacimiento";
+            this.mtbFechaNacimiento.Size = new System.Drawing.Size(159, 20);
+            this.mtbFechaNacimiento.TabIndex = 5;
+            this.mtbFechaNacimiento.ValidatingType = typeof(System.DateTime);
+            this.mtbFechaNacimiento.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.mtbFechaNacimiento_MaskInputRejected);
+            // 
+            // cbIDPlan
+            // 
+            this.cbIDPlan.DisplayMember = "descripcion";
+            this.cbIDPlan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbIDPlan.FormattingEnabled = true;
+            this.cbIDPlan.Location = new System.Drawing.Point(132, 36);
+            this.cbIDPlan.Name = "cbIDPlan";
+            this.cbIDPlan.Size = new System.Drawing.Size(160, 21);
+            this.cbIDPlan.TabIndex = 2;
+            this.cbIDPlan.Tag = "IDPlan";
+            this.cbIDPlan.ValueMember = "id_plan";
             // 
             // txtFechaNac
             // 
@@ -98,61 +129,45 @@
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             this.btnAceptar.Enter += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // txtTelefono
-            // 
-            this.txtTelefono.Location = new System.Drawing.Point(429, 36);
-            this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(160, 20);
-            this.txtTelefono.TabIndex = 6;
-            this.txtTelefono.Tag = "6";
-            // 
-            // txtLegajo
-            // 
-            this.txtLegajo.Location = new System.Drawing.Point(429, 88);
-            this.txtLegajo.Name = "txtLegajo";
-            this.txtLegajo.Size = new System.Drawing.Size(163, 20);
-            this.txtLegajo.TabIndex = 8;
-            this.txtLegajo.Tag = "8";
-            // 
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(429, 62);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(163, 20);
-            this.txtEmail.TabIndex = 7;
-            this.txtEmail.Tag = "7";
+            this.txtEmail.Size = new System.Drawing.Size(160, 20);
+            this.txtEmail.TabIndex = 8;
+            this.txtEmail.Tag = "Email";
             // 
             // txtDireccion
             // 
             this.txtDireccion.Location = new System.Drawing.Point(429, 10);
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(160, 20);
-            this.txtDireccion.TabIndex = 5;
-            this.txtDireccion.Tag = "5";
+            this.txtDireccion.TabIndex = 6;
+            this.txtDireccion.Tag = "Direccion";
             // 
             // txtTipoPersona
             // 
             this.txtTipoPersona.Location = new System.Drawing.Point(429, 114);
             this.txtTipoPersona.Name = "txtTipoPersona";
-            this.txtTipoPersona.Size = new System.Drawing.Size(163, 20);
+            this.txtTipoPersona.Size = new System.Drawing.Size(160, 20);
             this.txtTipoPersona.TabIndex = 10;
-            this.txtTipoPersona.Tag = "10";
+            this.txtTipoPersona.Tag = "TipoPersona";
             // 
             // txtNombre
             // 
             this.txtNombre.Location = new System.Drawing.Point(131, 88);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(160, 20);
-            this.txtNombre.TabIndex = 3;
-            this.txtNombre.Tag = "3";
+            this.txtNombre.TabIndex = 4;
+            this.txtNombre.Tag = "Nombre";
             // 
             // txtApellido
             // 
             this.txtApellido.Location = new System.Drawing.Point(131, 62);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(160, 20);
-            this.txtApellido.TabIndex = 2;
-            this.txtApellido.Tag = "2";
+            this.txtApellido.TabIndex = 3;
+            this.txtApellido.Tag = "Apellido";
             // 
             // txtID
             // 
@@ -161,7 +176,7 @@
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(160, 20);
             this.txtID.TabIndex = 1;
-            this.txtID.Tag = "1";
+            this.txtID.Tag = "ID";
             // 
             // lblTipoPersona
             // 
@@ -244,49 +259,18 @@
             this.lblID.TabIndex = 0;
             this.lblID.Text = "ID";
             // 
-            // cbIDPlan
-            // 
-            this.cbIDPlan.DataSource = this.planesBindingSource1;
-            this.cbIDPlan.DisplayMember = "descripcion";
-            this.cbIDPlan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbIDPlan.FormattingEnabled = true;
-            this.cbIDPlan.Location = new System.Drawing.Point(132, 36);
-            this.cbIDPlan.Name = "cbIDPlan";
-            this.cbIDPlan.Size = new System.Drawing.Size(160, 21);
-            this.cbIDPlan.TabIndex = 21;
-            this.cbIDPlan.ValueMember = "id_plan";
-            // 
-            // planesBindingSource
-            // 
-            this.planesBindingSource.DataMember = "planes";
-            this.planesBindingSource.DataSource = this.tp2_netDataSet;
-            // 
-            // tp2_netDataSet
-            // 
-            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
-            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // planesTableAdapter
-            // 
-            this.planesTableAdapter.ClearBeforeFill = true;
-            // 
-            // planesBindingSource1
-            // 
-            this.planesBindingSource1.DataMember = "planes";
-            this.planesBindingSource1.DataSource = this.tp2_netDataSet;
-            // 
             // PersonaDesktop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 191);
+            this.Controls.Add(this.mtbLegajo);
+            this.Controls.Add(this.mtbTelefono);
+            this.Controls.Add(this.mtbFechaNacimiento);
             this.Controls.Add(this.cbIDPlan);
-            this.Controls.Add(this.txtFechaNacimiento);
             this.Controls.Add(this.txtFechaNac);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
-            this.Controls.Add(this.txtTelefono);
-            this.Controls.Add(this.txtLegajo);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtDireccion);
             this.Controls.Add(this.txtTipoPersona);
@@ -304,10 +288,6 @@
             this.Controls.Add(this.lblID);
             this.Name = "PersonaDesktop";
             this.Text = "Persona";
-            this.Load += new System.EventHandler(this.PersonaDesktop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.planesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.planesBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -330,16 +310,15 @@
         private System.Windows.Forms.TextBox txtTipoPersona;
         private System.Windows.Forms.TextBox txtDireccion;
         private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.TextBox txtLegajo;
-        private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label txtFechaNac;
-        private System.Windows.Forms.TextBox txtFechaNacimiento;
         private System.Windows.Forms.ComboBox cbIDPlan;
-        private tp2_netDataSet tp2_netDataSet;
-        private System.Windows.Forms.BindingSource planesBindingSource;
-        private tp2_netDataSetTableAdapters.planesTableAdapter planesTableAdapter;
-        private System.Windows.Forms.BindingSource planesBindingSource1;
+        private System.Windows.Forms.MaskedTextBox mtbFechaNacimiento;
+        private System.Windows.Forms.MaskedTextBox mtbTelefono;
+        private System.Windows.Forms.MaskedTextBox mtbLegajo;
+        private System.Windows.Forms.ToolTip ttFechaNacimiento;
+        private System.Windows.Forms.ToolTip ttTelefono;
+        private System.Windows.Forms.ToolTip ttLegajo;
     }
 }

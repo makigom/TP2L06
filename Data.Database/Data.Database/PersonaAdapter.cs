@@ -43,7 +43,7 @@ namespace Data.Database
 
                     //copio los datos de la fila al obj
 
-                    per.ID = (int)drPersonas["id_usuario"];
+                    per.ID = (int)drPersonas["id_persona"];
                     per.Apellido = (string)drPersonas["apellido"];
                     per.Direccion = (string)drPersonas["direccion"];
                     per.Email = (string)drPersonas["email"];

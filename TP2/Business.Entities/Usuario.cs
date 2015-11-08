@@ -10,6 +10,7 @@ namespace Business.Entities
         {
 
         private string _NombreUsuario;
+        private bool _CambiaClave;
         private string _Clave;
         private bool _Habilitado;
         private int _IDPersona;
@@ -36,6 +37,12 @@ namespace Business.Entities
         {
             get { return _Habilitado; }
             set { _Habilitado = value; }
+        }
+
+        public bool CambiaClave
+        {
+            get { return _CambiaClave; }
+            set { _CambiaClave = value; }
         }
         }
     }

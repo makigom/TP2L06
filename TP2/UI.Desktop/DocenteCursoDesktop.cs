@@ -17,6 +17,16 @@ namespace UI.Desktop
         public DocenteCursoDesktop()
             {
             InitializeComponent();
+
+            CursoLogic CL = new CursoLogic();
+            this.cbIDCurso.DataSource = CL.GetAll();
+            this.cbIDCurso.DisplayMember = "id_curso";
+            this.cbIDCurso.ValueMember = "id_curso";
+
+            DocenteCursoLogic DCL = new DocenteCursoLogic();
+            this.cbTipoCargo.DataSource = DCL.GetAll();
+            this.cbTipoCargo.DisplayMember = "tipo_persona";
+            this.cbTipoCargo.ValueMember = "cargo";
             }
 
         private DocenteCurso _DocenteCursoActual;
@@ -38,39 +48,30 @@ namespace UI.Desktop
 
             switch (Modo)
                 {
-
                 case ModoForm.Alta:
                         {
                         this.btnAceptar.Text = "Guardar";
-
                         this.DocenteCursoActual.State = BusinessEntity.States.New;
                         }
                     break;
-
                 case ModoForm.Modificacion:
                         {
                         this.btnAceptar.Text = "Guardar";
-
                         this.DocenteCursoActual.State = BusinessEntity.States.Modified;                        
                         }
                     break;
-
                 case ModoForm.Baja:
                         {
                         this.btnAceptar.Text = "Eliminar";
-
                         this.DocenteCursoActual.State = BusinessEntity.States.Deleted;
                         } 
                     break;
-
                 case ModoForm.Consulta:
                         {
                         this.btnAceptar.Text = "Aceptar";
-
                         this.DocenteCursoActual.State = BusinessEntity.States.Unmodified;
                         }
                     break;
-
                 default:
                     break;
                 }
@@ -81,41 +82,37 @@ namespace UI.Desktop
             
             if (Modo == AplicationForm.ModoForm.Alta)
                 {
-                Business.Entities.DocenteCurso dca = new Business.Entities.DocenteCurso();
-                 
+                DocenteCurso dca = new DocenteCurso();
                 DocenteCursoActual = dca;
 
                 this.DocenteCursoActual.IDDocente = Convert.ToInt32(this.txtIDDocente.Text);
-                this.DocenteCursoActual.IDCurso = Convert.ToInt32(this.cbIDCurso.Text);
-                this.DocenteCursoActual.TipoCargo = Convert.ToInt32(this.cbTipoCargo.Text);                
+                this.DocenteCursoActual.IDCurso = Convert.ToInt32(this.cbIDCurso.SelectedValue);
+                this.DocenteCursoActual.TipoCargo = Convert.ToInt32(this.cbTipoCargo.SelectedValue);                
                 }
             else if (Modo == AplicationForm.ModoForm.Modificacion)
                 {
                     this.DocenteCursoActual.ID = Convert.ToInt32(this.txtIDDictado.Text);
                     this.DocenteCursoActual.IDDocente = Convert.ToInt32(this.txtIDDocente.Text);
-                    this.DocenteCursoActual.TipoCargo = Convert.ToInt32(this.cbTipoCargo.Text); 
+                    this.DocenteCursoActual.IDCurso = Convert.ToInt32(this.cbIDCurso.SelectedValue);
+                    this.DocenteCursoActual.TipoCargo = Convert.ToInt32(this.cbTipoCargo.SelectedValue); 
                 }
             }
 
         public override void GuardarCambios() 
             {
             MapearADatos();
-
             DocenteCursoLogic DCL = new DocenteCursoLogic();
-
             DCL.Save(DocenteCursoActual);
             }
 
-
-      public override bool Validar()
+          public override bool Validar()
             {
-
                 string mensaje = "";
                 bool ok = true;
 
                 foreach (Control c in this.Controls)
                 {
-                    if ((c is TextBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+                    if ((c is TextBox || c is ComboBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
                 }
 
                 if (!string.IsNullOrEmpty(mensaje))
@@ -147,11 +144,8 @@ namespace UI.Desktop
         public DocenteCursoDesktop(int ID, ModoForm modo): this()
             {
             this.Modo = modo;
-
             DocenteCursoLogic dcl = new DocenteCursoLogic();
-
             DocenteCursoActual = dcl.GetOne(ID);
-
             MapearDeDatos();
             }
 
@@ -160,7 +154,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -168,17 +161,7 @@ namespace UI.Desktop
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
-
             if (DR == DialogResult.Yes) this.Close();    
-        }
-
-        private void DocenteCursoDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.personas' Puede moverla o quitarla según sea necesario.
-            this.personasTableAdapter.Fill(this.tp2_netDataSet.personas);
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.cursos' Puede moverla o quitarla según sea necesario.
-            this.cursosTableAdapter.Fill(this.tp2_netDataSet.cursos);
-
         }
     }
 }

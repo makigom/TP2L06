@@ -17,12 +17,16 @@ namespace UI.Desktop
         public AlumnoInscripcionesDesktop()
         {
             InitializeComponent();
+
+            CursoLogic cl = new CursoLogic();
+            this.cbIDCurso.DataSource = cl.GetAll();
+            this.cbIDCurso.DisplayMember = "id_materia";
+            this.cbIDCurso.ValueMember = "id_curso";
         }
 
         private AlumnoInscripciones _AluInscActual;
 
         public AlumnoInscripciones AluInscActual
-        
             {
             get { return _AluInscActual; }
 
@@ -83,7 +87,7 @@ namespace UI.Desktop
                 AluInscActual = aluInsc;
                                 
                 this.AluInscActual.IDAlumno = Convert.ToInt32(this.mtbIDAlumno.Text);                
-                this.AluInscActual.IDCurso = Convert.ToInt32(this.cbIDCurso.Text);                
+                this.AluInscActual.IDCurso = Convert.ToInt32(this.cbIDCurso.SelectedValue);                
                 this.AluInscActual.Condicion = this.txtCondicion.Text;                
                 this.AluInscActual.Nota = Convert.ToInt32(this.mtbNota.Text);     
                 }
@@ -91,22 +95,17 @@ namespace UI.Desktop
                 {
                 this.AluInscActual.ID = Convert.ToInt32(this.ID.Text);                
                 this.AluInscActual.IDAlumno = Convert.ToInt32(this.mtbIDAlumno.Text);                
-                this.AluInscActual.IDCurso = Convert.ToInt32(this.cbIDCurso.Text);                
+                this.AluInscActual.IDCurso = Convert.ToInt32(this.cbIDCurso.SelectedValue);                
                 this.AluInscActual.Condicion = this.txtCondicion.Text;                
-                //mtbNota es de tipo maskedTextBox
                 this.AluInscActual.Nota = Convert.ToInt32(this.mtbNota.Text);
                 }
             }
 
         public override void GuardarCambios() 
             {
-
             MapearADatos();
-
             AlumnoInscripcionLogic AIL = new AlumnoInscripcionLogic();
-
             AIL.Save(AluInscActual);
-
             }
 
         public override bool Validar()
@@ -116,7 +115,13 @@ namespace UI.Desktop
 
             foreach (Control c in this.Controls)
             {
-                if ((c is TextBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+                if ((c is TextBox || c is ComboBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+            }
+
+            if (!(mtbIDAlumno.MaskFull || mtbNota.MaskFull))
+            {
+                mensaje = "IDAlumno y/o Nota estan vacios.\n" + mensaje;
+                ok = false;
             }
 
             if (!string.IsNullOrEmpty(mensaje))
@@ -148,11 +153,8 @@ namespace UI.Desktop
         public AlumnoInscripcionesDesktop(int ID, ModoForm modo): this()
             {
             this.Modo = modo;
-
             AlumnoInscripcionLogic AIL = new AlumnoInscripcionLogic();
-
             AluInscActual = AIL.GetOne(ID);
-
             MapearDeDatos();
             }
 
@@ -161,7 +163,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -169,61 +170,7 @@ namespace UI.Desktop
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
-
             if (DR == DialogResult.Yes) this.Close();
-        }
-
-        // Boolean flag used to determine when a character other than a number is entered.
-        private bool nonNumberEntered = false;
-        // Handle the KeyDown event to determine the type of character entered into the control.     
-      
-       
-        private void KeyDown(object sender, KeyEventArgs e)
-        {
-            // Initialize the flag to false.
-            nonNumberEntered = false;
-
-            // Determine whether the keystroke is a number from the top of the keyboard.
-            if (e.KeyCode < Keys.D0 || e.KeyCode > Keys.D9)
-            {
-                // Determine whether the keystroke is a number from the keypad.
-                if (e.KeyCode < Keys.NumPad0 || e.KeyCode > Keys.NumPad9)
-                {
-                    // Determine whether the keystroke is a backspace.
-                    if (e.KeyCode != Keys.Back)
-                    {
-                        // A non-numerical keystroke was pressed.
-                        // Set the flag to true and evaluate in KeyPress event.
-                        nonNumberEntered = true;
-                    }
-                }
-            }
-            //If shift key was pressed, it's not a number.
-            if (Control.ModifierKeys == Keys.Shift)
-            {
-                nonNumberEntered = true;
-            }
-
-        }
-
-        // This event occurs after the KeyDown event and can be used to prevent
-        // characters from entering the control.
-        private void KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Check for the flag being set in the KeyDown event.
-            if (nonNumberEntered == true)
-            {
-                // Stop the character from being entered into the control since it is non-numerical.
-                e.Handled = true;
-            }
-
-        }
-
-        private void AlumnoInscripcionesDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.cursos' Puede moverla o quitarla según sea necesario.
-            this.cursosTableAdapter.Fill(this.tp2_netDataSet.cursos);
-
         }
 
         //Metodo que se utiliza en conjunto con la mascara mbNota para validar que el tipo de dato que se ingrese sea entero
@@ -239,9 +186,26 @@ namespace UI.Desktop
             ttIDAlumno.ToolTipTitle = "Tipo de dato invalido";
             ttIDAlumno.Show("El campo admite solo digitos",mtbIDAlumno);
         }
-        
-        
-        
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            //Siempre se deben ingresar 5 numeros, de lo contrario tira error. Buscar como hacer que se complete con ceros
+            
+            int id = Convert.ToInt32(this.mtbIDAlumno.Text);
+            AlumnoInscripcionLogic AIL = new AlumnoInscripcionLogic();
+            AluInscActual = AIL.GetOne(id);
+            
+            if (AluInscActual == null)
+            {
+                DialogResult DR = (MessageBox.Show("El id no existe", "Aceptar", MessageBoxButtons.OK, MessageBoxIcon.Error));
+            }
+            else 
+            { 
+                txtCondicion.ReadOnly = false; 
+                mtbNota.ReadOnly = false; 
+            }
+
+        }
     }
 }
  

@@ -45,8 +45,10 @@ namespace Data.Database
                     //copio los datos de la fila al obj
                     
                     usr.ID = (int)drUsuarios["id_usuario"];
+                    usr.IDPersona = (int)drUsuarios["id_persona"];
                     usr.NombreUsuario = (string)drUsuarios["nombre_usuario"];
                     usr.Clave = (string)drUsuarios["clave"];
+                    usr.CambiaClave = (bool)drUsuarios["cambia_clave"];
                     usr.Habilitado = (bool)drUsuarios["habilitado"];
 
                     //agrego el objeto con datos a la lista que devuelvo                   
@@ -80,15 +82,17 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdUsuarios = new SqlCommand("SELECT * from usuarios where id_usuario=@id", sqlConn);
-                cmdUsuarios.Parameters.Add("@id", SqlDbType.Int).Value = ID;
+                SqlCommand cmdUsuarios = new SqlCommand("SELECT * from usuarios where id_usuario=@id_usuario", sqlConn);
+                cmdUsuarios.Parameters.Add("@id_usuario", SqlDbType.Int).Value = ID;
                 SqlDataReader drUsuarios = cmdUsuarios.ExecuteReader();
 
                 if (drUsuarios.Read())
                 {
                     usr.ID = (int)drUsuarios["id_usuario"];
+                    usr.IDPersona = (int)drUsuarios["id_persona"];
                     usr.NombreUsuario = (string)drUsuarios["nombre_usuario"];
                     usr.Clave = (string)drUsuarios["clave"];
+                    usr.CambiaClave = (bool)drUsuarios["cambia_clave"];
                     usr.Habilitado = (bool)drUsuarios["habilitado"];
                 }
 
@@ -115,8 +119,8 @@ namespace Data.Database
             {
                 this.OpenConnection();
                 
-                SqlCommand cmdDelete = new SqlCommand("delete usuarios where id_usuario=@id", sqlConn);               
-                cmdDelete.Parameters.Add("@id", SqlDbType.Int).Value = ID;               
+                SqlCommand cmdDelete = new SqlCommand("DELETE usuarios where id_usuario=@id_usuario", sqlConn);               
+                cmdDelete.Parameters.Add("@id_usuario", SqlDbType.Int).Value = ID;               
                 cmdDelete.ExecuteNonQuery();
             }
 
@@ -140,13 +144,14 @@ namespace Data.Database
         
                 SqlCommand cmdSave = new SqlCommand(
                     "UPDATE usuarios SET nombre_usuario=@nombre_usuario, clave=@clave,"
-                    + " habilitado=@habilitado WHERE id_usuario=@id_usuario", sqlConn);              
+                    + " cambia_clave=@cambia_clave,habilitado=@habilitado, ip_persona=@id_persona WHERE id_usuario=@id_usuario", sqlConn);              
                 
                 cmdSave.Parameters.Add("@id_usuario", SqlDbType.Int).Value = usuario.ID;
+                cmdSave.Parameters.Add("@id_persona", SqlDbType.Int).Value = usuario.IDPersona;
                 cmdSave.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario;
                 cmdSave.Parameters.Add("@clave", SqlDbType.VarChar, 50).Value = usuario.Clave;
+                cmdSave.Parameters.Add("@cambia_clave", SqlDbType.Bit).Value = usuario.CambiaClave;
                 cmdSave.Parameters.Add("@habilitado", SqlDbType.Bit).Value = usuario.Habilitado;
-                cmdSave.Parameters.Add("@id_persona", SqlDbType.Int).Value = usuario.IDPersona;
                 cmdSave.ExecuteNonQuery();
             }
 
@@ -170,12 +175,14 @@ namespace Data.Database
                 this.OpenConnection();
         
                 SqlCommand cmdSave = new SqlCommand(
-                    "insert into usuarios (nombre_usuario, clave, habilitado)" +
-                    "values (@nombre_usuario, @clave,@habilitado)" +
-                    "select @@identity", sqlConn);
-                
+                    "INSERT into usuarios (nombre_usuario, clave, cambia_clave, habilitado, id_persona)" +
+                    "VALUES (@nombre_usuario, @clave,@cambia_clave,@habilitado,@id_persona)" +
+                    "SELECT @@identity", sqlConn);
+
+                cmdSave.Parameters.Add("@id_Persona", SqlDbType.Int).Value = usuario.IDPersona;
                 cmdSave.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario;
                 cmdSave.Parameters.Add("@clave", SqlDbType.VarChar, 50).Value = usuario.Clave;
+                cmdSave.Parameters.Add("@cambia_clave", SqlDbType.Bit).Value = usuario.CambiaClave;
                 cmdSave.Parameters.Add("@habilitado", SqlDbType.Bit).Value = usuario.Habilitado;
                 usuario.ID = Decimal.ToInt32((decimal)cmdSave.ExecuteScalar());
             }

@@ -26,26 +26,6 @@ namespace Util
         {
             if (txt.Equals(string.Empty) || string.IsNullOrWhiteSpace(txt)) return false;
             return true;
-        }
-
-        public static bool IsDate(string fechaentrante)
-        {
-            bool isDate = true;
-
-            try
-            {
-                DateTime fecha = DateTime.ParseExact(fechaentrante, "YYYY-MM-DD", null);
-            }
-
-            catch (Exception e)
-            {
-                isDate = false;
-
-                throw (e);
-            }
-            return isDate;
-        }
-
-       
+        }       
     }
 }

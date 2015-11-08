@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.lblID = new System.Windows.Forms.Label();
             this.lblCupo = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
@@ -40,15 +39,7 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.cbIDMateria = new System.Windows.Forms.ComboBox();
-            this.cbComision = new System.Windows.Forms.ComboBox();
-            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
-            this.comisionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.comisionesTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.comisionesTableAdapter();
-            this.materiasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.materiasTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.materiasTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comisionesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.materiasBindingSource)).BeginInit();
+            this.cbIDComision = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblID
@@ -76,6 +67,7 @@
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(150, 20);
             this.txtID.TabIndex = 1;
+            this.txtID.Tag = "ID";
             // 
             // txtCupo
             // 
@@ -83,6 +75,7 @@
             this.txtCupo.Name = "txtCupo";
             this.txtCupo.Size = new System.Drawing.Size(150, 20);
             this.txtCupo.TabIndex = 2;
+            this.txtCupo.Tag = "Cupo";
             // 
             // lblIDComision
             // 
@@ -117,6 +110,7 @@
             this.txtAnioCalendario.Name = "txtAnioCalendario";
             this.txtAnioCalendario.Size = new System.Drawing.Size(150, 20);
             this.txtAnioCalendario.TabIndex = 3;
+            this.txtAnioCalendario.Tag = "AnioCalendario";
             // 
             // btnAceptar
             // 
@@ -141,56 +135,33 @@
             // 
             // cbIDMateria
             // 
-            this.cbIDMateria.DataSource = this.materiasBindingSource;
-            this.cbIDMateria.DisplayMember = "desc_materia";
+            this.cbIDMateria.DisplayMember = "id_materia";
             this.cbIDMateria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIDMateria.Location = new System.Drawing.Point(348, 53);
             this.cbIDMateria.Name = "cbIDMateria";
             this.cbIDMateria.Size = new System.Drawing.Size(162, 21);
-            this.cbIDMateria.TabIndex = 9;
+            this.cbIDMateria.TabIndex = 5;
+            this.cbIDMateria.Tag = "IDMateria";
             this.cbIDMateria.ValueMember = "id_materia";
             // 
-            // cbComision
+            // cbIDComision
             // 
-            this.cbComision.DataSource = this.comisionesBindingSource;
-            this.cbComision.DisplayMember = "desc_comision";
-            this.cbComision.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbComision.FormattingEnabled = true;
-            this.cbComision.Location = new System.Drawing.Point(348, 26);
-            this.cbComision.Name = "cbComision";
-            this.cbComision.Size = new System.Drawing.Size(162, 21);
-            this.cbComision.TabIndex = 10;
-            this.cbComision.ValueMember = "id_comision";
-            // 
-            // tp2_netDataSet
-            // 
-            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
-            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // comisionesBindingSource
-            // 
-            this.comisionesBindingSource.DataMember = "comisiones";
-            this.comisionesBindingSource.DataSource = this.tp2_netDataSet;
-            // 
-            // comisionesTableAdapter
-            // 
-            this.comisionesTableAdapter.ClearBeforeFill = true;
-            // 
-            // materiasBindingSource
-            // 
-            this.materiasBindingSource.DataMember = "materias";
-            this.materiasBindingSource.DataSource = this.tp2_netDataSet;
-            // 
-            // materiasTableAdapter
-            // 
-            this.materiasTableAdapter.ClearBeforeFill = true;
+            this.cbIDComision.DisplayMember = "id_comision";
+            this.cbIDComision.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbIDComision.FormattingEnabled = true;
+            this.cbIDComision.Location = new System.Drawing.Point(348, 26);
+            this.cbIDComision.Name = "cbIDComision";
+            this.cbIDComision.Size = new System.Drawing.Size(162, 21);
+            this.cbIDComision.TabIndex = 4;
+            this.cbIDComision.Tag = "IDComision";
+            this.cbIDComision.ValueMember = "id_comision";
             // 
             // CursoDesktop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 162);
-            this.Controls.Add(this.cbComision);
+            this.Controls.Add(this.cbIDComision);
             this.Controls.Add(this.cbIDMateria);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
@@ -204,10 +175,6 @@
             this.Controls.Add(this.lblID);
             this.Name = "CursoDesktop";
             this.Text = "CursoDesktop";
-            this.Load += new System.EventHandler(this.CursoDesktop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comisionesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.materiasBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,11 +193,6 @@
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ComboBox cbIDMateria;
-        private System.Windows.Forms.ComboBox cbComision;
-        private tp2_netDataSet tp2_netDataSet;
-        private System.Windows.Forms.BindingSource comisionesBindingSource;
-        private tp2_netDataSetTableAdapters.comisionesTableAdapter comisionesTableAdapter;
-        private System.Windows.Forms.BindingSource materiasBindingSource;
-        private tp2_netDataSetTableAdapters.materiasTableAdapter materiasTableAdapter;
+        private System.Windows.Forms.ComboBox cbIDComision;
     }
 }

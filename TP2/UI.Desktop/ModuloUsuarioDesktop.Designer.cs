@@ -28,24 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.lblID = new System.Windows.Forms.Label();
             this.lblIDModulo = new System.Windows.Forms.Label();
             this.lblIDUsuario = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.modulosusuariosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cbIDModulo = new System.Windows.Forms.ComboBox();
-            this.modulosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tp2_netDataSet = new UI.Desktop.tp2_netDataSet();
-            this.modulosBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.modulosTableAdapter = new UI.Desktop.tp2_netDataSetTableAdapters.modulosTableAdapter();
             this.txtIDUsuario = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.modulosusuariosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.modulosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.modulosBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblID
@@ -82,6 +72,7 @@
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(147, 20);
             this.txtID.TabIndex = 1;
+            this.txtID.Tag = "ID";
             // 
             // btnAceptar
             // 
@@ -106,29 +97,15 @@
             // 
             // cbIDModulo
             // 
-            this.cbIDModulo.DataSource = this.modulosBindingSource1;
-            this.cbIDModulo.DisplayMember = "desc_modulo";
+            this.cbIDModulo.DisplayMember = "id_modulo_usuario";
             this.cbIDModulo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbIDModulo.FormattingEnabled = true;
             this.cbIDModulo.Location = new System.Drawing.Point(84, 44);
             this.cbIDModulo.Name = "cbIDModulo";
             this.cbIDModulo.Size = new System.Drawing.Size(147, 21);
-            this.cbIDModulo.TabIndex = 6;
-            this.cbIDModulo.ValueMember = "id_modulo";
-            // 
-            // tp2_netDataSet
-            // 
-            this.tp2_netDataSet.DataSetName = "tp2_netDataSet";
-            this.tp2_netDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // modulosBindingSource1
-            // 
-            this.modulosBindingSource1.DataMember = "modulos";
-            this.modulosBindingSource1.DataSource = this.tp2_netDataSet;
-            // 
-            // modulosTableAdapter
-            // 
-            this.modulosTableAdapter.ClearBeforeFill = true;
+            this.cbIDModulo.TabIndex = 2;
+            this.cbIDModulo.Tag = "IDModulo";
+            this.cbIDModulo.ValueMember = "id_modulo_usuario";
             // 
             // txtIDUsuario
             // 
@@ -136,6 +113,7 @@
             this.txtIDUsuario.Name = "txtIDUsuario";
             this.txtIDUsuario.Size = new System.Drawing.Size(147, 20);
             this.txtIDUsuario.TabIndex = 3;
+            this.txtIDUsuario.Tag = "IDUsuario";
             // 
             // ModuloUsuarioDesktop
             // 
@@ -151,11 +129,6 @@
             this.Controls.Add(this.lblID);
             this.Name = "ModuloUsuarioDesktop";
             this.Text = "Modulo - Usuario";
-            this.Load += new System.EventHandler(this.ModuloUsuarioDesktop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.modulosusuariosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.modulosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tp2_netDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.modulosBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,12 +142,7 @@
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.BindingSource modulosusuariosBindingSource;
         private System.Windows.Forms.ComboBox cbIDModulo;
-        private System.Windows.Forms.BindingSource modulosBindingSource;
-        private tp2_netDataSet tp2_netDataSet;
-        private System.Windows.Forms.BindingSource modulosBindingSource1;
-        private tp2_netDataSetTableAdapters.modulosTableAdapter modulosTableAdapter;
         private System.Windows.Forms.TextBox txtIDUsuario;
     }
 }

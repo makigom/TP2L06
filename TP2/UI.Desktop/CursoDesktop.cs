@@ -19,11 +19,21 @@ namespace UI.Desktop
         public CursoDesktop()
             {
             InitializeComponent();
+
+            ComisionLogic CL = new ComisionLogic();
+            this.cbIDComision.DataSource = CL.GetAll();
+            this.cbIDComision.DisplayMember = "desc_comision";
+            this.cbIDComision.ValueMember = "id_comision";
+
+            MateriaLogic ML = new MateriaLogic();
+            this.cbIDMateria.DataSource = ML.GetAll();
+            this.cbIDMateria.DisplayMember = "desc_materia";
+            this.cbIDMateria.ValueMember = "id_materia";
             }
 
-        private Business.Entities.Curso _CursoActual;
+        private Curso _CursoActual;
 
-        public Business.Entities.Curso CursoActual
+        public Curso CursoActual
         
             {
             get { return _CursoActual; }
@@ -34,39 +44,34 @@ namespace UI.Desktop
         public override void MapearDeDatos()
             {
             this.txtID.Text = this.CursoActual.ID.ToString();     
-            this.cbComision.Text = this.CursoActual.IDComision.ToString();           
+            this.cbIDComision.Text = this.CursoActual.IDComision.ToString();           
             this.txtCupo.Text = this.CursoActual.Cupo.ToString();    
             this.cbIDMateria.Text = this.CursoActual.IDMateria.ToString();           
             this.txtAnioCalendario.Text = this.CursoActual.AnioCalendario.ToString();
 
             switch (Modo)
                 {
-
                 case ModoForm.Alta:
                         {
                         this.btnAceptar.Text = "Guardar";
-
                         this.CursoActual.State = BusinessEntity.States.New;
                         }
                     break;
                 case ModoForm.Modificacion:
                         {
                         this.btnAceptar.Text = "Guardar";
-
                         this.CursoActual.State = BusinessEntity.States.Modified;                        
                         }
                     break;
                 case ModoForm.Baja:
                         {
                         this.btnAceptar.Text = "Eliminar";
-
                         this.CursoActual.State = BusinessEntity.States.Deleted;
                         } 
                     break;
                 case ModoForm.Consulta:
                         {
                         this.btnAceptar.Text = "Aceptar";
-
                         this.CursoActual.State = BusinessEntity.States.Unmodified;
                         }
                     break;
@@ -77,38 +82,31 @@ namespace UI.Desktop
 
         public override void MapearADatos()
             {
-            
             if (Modo == AplicationForm.ModoForm.Alta)
                 {
-                Business.Entities.Curso cur = new Business.Entities.Curso();             
+                Curso cur = new Curso();             
                 CursoActual = cur;
                  
-                this.CursoActual.Cupo = int.Parse(this.txtCupo.Text);              
-                this.CursoActual.AnioCalendario=int.Parse(txtAnioCalendario.Text);
-                this.CursoActual.IDComision=int.Parse(cbComision.Text);                     
-                this.CursoActual.IDMateria=int.Parse(cbIDMateria.Text);
-
+                this.CursoActual.Cupo = Convert.ToInt32(this.txtCupo.Text);
+                this.CursoActual.AnioCalendario = Convert.ToInt32(txtAnioCalendario.Text);
+                this.CursoActual.IDComision = Convert.ToInt32(cbIDComision.SelectedValue);
+                this.CursoActual.IDMateria = Convert.ToInt32(cbIDMateria.SelectedValue);
                 }
             else if (Modo == AplicationForm.ModoForm.Modificacion)
                 {
                 this.CursoActual.ID = Convert.ToInt32(this.txtID.Text);             
                 this.CursoActual.AnioCalendario=Convert.ToInt32(this.txtAnioCalendario);                
                 this.CursoActual.Cupo=Convert.ToInt32(this.txtCupo);
-                this.CursoActual.IDComision = Convert.ToInt32(this.cbComision);
-                this.CursoActual.IDMateria = Convert.ToInt32(this.cbIDMateria);
-                
+                this.CursoActual.IDComision = Convert.ToInt32(this.cbIDComision.SelectedValue);
+                this.CursoActual.IDMateria = Convert.ToInt32(this.cbIDMateria.SelectedValue);   
                 }
             }
 
         public override void GuardarCambios() 
             {
-
             MapearADatos();
-
             CursoLogic CL = new CursoLogic();
-
             CL.Save(CursoActual);
-
             }
 
       public override bool Validar()
@@ -118,7 +116,7 @@ namespace UI.Desktop
 
                 foreach (Control c in this.Controls)
                 {
-                    if ((c is TextBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
+                    if ((c is TextBox || c is ComboBox) && (c.Tag.ToString() != "ID") && (!Util.Util.IsComplete(c.Text))) mensaje += " - " + c.Tag.ToString() + "\n";
                 }
 
                 if (!string.IsNullOrEmpty(mensaje))
@@ -150,11 +148,8 @@ namespace UI.Desktop
         public CursoDesktop(int ID, ModoForm modo):this()
             {
             this.Modo = modo;
-
             CursoLogic CL = new CursoLogic();
-
             CursoActual = CL.GetOne(ID);
-
             MapearDeDatos();
             }
 
@@ -163,7 +158,6 @@ namespace UI.Desktop
             if (Validar() == true)
             {
                 GuardarCambios();
-
                 this.Close();
             }
         }
@@ -171,17 +165,7 @@ namespace UI.Desktop
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult DR = (MessageBox.Show("Seguro que desea cancelar el proceso?", "Cancelar", MessageBoxButtons.YesNo));
-
             if (DR == DialogResult.Yes) this.Close();
-        }
-
-        private void CursoDesktop_Load(object sender, EventArgs e)
-        {
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.materias' Puede moverla o quitarla según sea necesario.
-            this.materiasTableAdapter.Fill(this.tp2_netDataSet.materias);
-            // TODO: esta línea de código carga datos en la tabla 'tp2_netDataSet.comisiones' Puede moverla o quitarla según sea necesario.
-            this.comisionesTableAdapter.Fill(this.tp2_netDataSet.comisiones);
-
         }
     }
 }
